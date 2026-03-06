@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Theme Variables */
+:root {
+    --bg-primary: #F8FAFC;
+    --bg-secondary: #FFFFFF;
+    --bg-card: #FFFFFF;
+    --bg-card-hover: #EEF2F7;
+    --text-primary: #1E293B;
+    --text-secondary: #475569;
+    --border-primary: rgba(0, 0, 0, 0.05);
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(0, 0, 0, 0.05);
+}
+
+.dark {
+    --bg-primary: #0A0E1A;
+    --bg-secondary: #1A1F2E;
+    --bg-card: #1E2432;
+    --bg-card-hover: #242B3D;
+    --text-primary: #FFFFFF;
+    --text-secondary: #94A3B8;
+    --border-primary: rgba(255, 255, 255, 0.05);
+    --glass-bg: rgba(30, 36, 50, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+@layer base {
+    body {
+        @apply bg-bg-primary text-text-primary font-sans antialiased transition-colors duration-300;
+    }
+}
+
+/* Custom Animations */
+@layer utilities {
+    .animate-fade-in {
+        animation: fadeIn 0.3s ease-in;
+    }
+
+    .animate-slide-up {
+        animation: slideUp 0.4s ease-out;
+    }
+
+    .animate-slide-down {
+        animation: slideDown 0.4s ease-out;
+    }
+
+    /* Shadow Glows */
+    .shadow-glow-cyan {
+        box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    }
+
+    .shadow-glow-violet {
+        box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    @apply bg-bg-secondary;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-bg-card-hover rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    @apply bg-violet;
+}
+
+/* Glassmorphism Effect */
+.glass {
+    background: rgba(30, 36, 50, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Gradient Text */
+.gradient-text {
+    background: linear-gradient(135deg, #00D4FF 0%, #A855F7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
