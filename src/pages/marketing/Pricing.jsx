@@ -61,12 +61,12 @@ const faqs = [
 const FAQItem = ({ faq }) => {
     const [open, setOpen] = useState(false)
     return (
-        <div className="border-b border-white/10 last:border-0">
+        <div className="border-b border-border-primary last:border-0">
             <button
                 onClick={() => setOpen(!open)}
                 className="w-full flex items-center justify-between py-6 text-left"
             >
-                <span className="font-bold text-white pr-8">{faq.q}</span>
+                <span className="font-bold text-text-primary pr-8">{faq.q}</span>
                 <ChevronDown
                     className={`shrink-0 text-text-secondary transition-transform ${open ? 'rotate-180' : ''}`}
                     size={20}
@@ -95,7 +95,7 @@ const Pricing = () => {
 
                     <div className="text-center max-w-3xl mx-auto mb-16 relative z-10">
                         <span className="text-cyan tracking-wider uppercase text-sm font-bold mb-4 block">Tarification Globale</span>
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6">
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-text-primary mb-6">
                             Investissez dans votre <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan to-violet">Exécution</span>
                         </h1>
                         <p className="text-lg text-text-secondary">
@@ -115,10 +115,10 @@ const Pricing = () => {
                 </div>
 
                 {/* Section Pourquoi Syana */}
-                <div className="py-24 bg-bg-secondary/50 border-y border-white/5 px-4 relative z-10">
+                <div className="py-24 bg-bg-secondary/50 border-y border-border-primary px-4 relative z-10">
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
-                            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Pourquoi Syana ?</h2>
+                            <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-4">Pourquoi Syana ?</h2>
                             <p className="text-text-secondary">Conçu pour arrêter de réfléchir et commencer à construire.</p>
                         </div>
 
@@ -126,11 +126,11 @@ const Pricing = () => {
                             {features.map((feature, idx) => {
                                 const Icon = feature.icon
                                 return (
-                                    <div key={idx} className="bg-bg-card p-8 rounded-xl border border-white/5 hover:border-white/10 transition-colors">
-                                        <div className="w-12 h-12 rounded-lg bg-white/5 flex items-center justify-center text-cyan mb-6">
+                                    <div key={idx} className="bg-bg-card p-8 rounded-xl border border-border-primary hover:border-text-secondary transition-colors">
+                                        <div className="w-12 h-12 rounded-lg bg-text-secondary/10 flex items-center justify-center text-cyan mb-6">
                                             <Icon size={24} />
                                         </div>
-                                        <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
+                                        <h3 className="text-xl font-bold text-text-primary mb-3">{feature.title}</h3>
                                         <p className="text-text-secondary leading-relaxed">{feature.description}</p>
                                     </div>
                                 )
@@ -142,9 +142,9 @@ const Pricing = () => {
                 {/* FAQ */}
                 <div className="py-24 px-4 max-w-3xl mx-auto relative z-10">
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl font-bold text-white mb-4">Questions fréquentes</h2>
+                        <h2 className="text-3xl font-bold text-text-primary mb-4">Questions fréquentes</h2>
                     </div>
-                    <div className="bg-bg-card rounded-2xl border border-white/5 px-6">
+                    <div className="bg-bg-card rounded-2xl border border-border-primary px-6">
                         {faqs.map((faq, idx) => (
                             <FAQItem key={idx} faq={faq} />
                         ))}
@@ -158,12 +158,12 @@ const Pricing = () => {
                         <div className="absolute bottom-0 left-0 w-64 h-64 bg-violet/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
                         <div className="relative z-10">
-                            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Prêt-e à structurer ton business ?</h2>
-                            <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
+                            <h2 className="text-3xl md:text-5xl font-bold text-text-primary mb-6">Prêt-e à structurer ton business ?</h2>
+                            <p className="text-text-secondary text-lg mb-8 max-w-2xl mx-auto">
                                 Arrêtez de collectionner les formations et commencez à construire un système d'exécution imparable.
                             </p>
                             <Link to="/inscription">
-                                <Button size="lg" className="bg-white text-bg-primary hover:bg-white/90 shadow-glow-cyan h-14 px-8 rounded-full font-bold">
+                                <Button size="lg" className="bg-text-primary text-bg-primary hover:opacity-90 shadow-glow-cyan h-14 px-8 rounded-full font-bold">
                                     Rejoindre SYANA
                                 </Button>
                             </Link>

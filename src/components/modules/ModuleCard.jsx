@@ -71,12 +71,14 @@ const ModuleCard = ({ module, locked = false }) => {
                         <ProgressBar value={module.progress} size="sm" />
                     </div>
 
-                    <Link to={`/modules/${module.id}`}>
-                        <Button className="w-full justify-between group-hover:bg-cyan group-hover:text-white border-cyan/30 text-cyan hover:border-cyan" variant="secondary">
-                            Continuer
-                            <Play size={16} className="ml-2 fill-current" />
-                        </Button>
-                    </Link>
+                    <div className="mt-8">
+                        <Link to={`/modules/${module.id}`}>
+                            <Button className="w-full justify-between group-hover:bg-cyan group-hover:text-bg-primary border-cyan/30 text-cyan hover:border-cyan" variant="secondary">
+                                Continuer
+                                <Play size={16} className="ml-2 fill-current" />
+                            </Button>
+                        </Link>
+                    </div>
                 </div>
             ) : (
                 <div className="pt-4 mt-auto">

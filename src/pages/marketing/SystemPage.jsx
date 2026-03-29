@@ -31,7 +31,7 @@ const SystemPage = () => {
     ]
 
     return (
-        <div className="min-h-screen bg-bg-primary font-sans text-white">
+        <div className="min-h-screen bg-bg-primary font-sans text-text-primary">
             <Navbar />
 
             {/* Hero Section */}
@@ -51,12 +51,12 @@ const SystemPage = () => {
             </section>
 
             {/* The 3 Pillars */}
-            <section className="py-20 bg-bg-secondary border-y border-white/5">
+            <section className="py-20 bg-bg-secondary border-y border-border-primary">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {pillars.map((p, i) => (
-                            <div key={i} className="bg-bg-card p-8 rounded-2xl border border-white/5 hover:border-cyan/30 transition-all">
-                                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-cyan mb-6">
+                            <div key={i} className="bg-bg-card p-8 rounded-2xl border border-border-primary hover:border-cyan/30 transition-all">
+                                <div className="w-12 h-12 rounded-xl bg-text-secondary/10 flex items-center justify-center text-cyan mb-6">
                                     <p.icon size={24} />
                                 </div>
                                 <h3 className="text-xl font-bold mb-3">{p.title}</h3>
@@ -89,15 +89,15 @@ const SystemPage = () => {
                                 </div>
 
                                 {/* Content */}
-                                <Card className="flex-1 hover:border-white/20 transition-all">
+                                <Card className="flex-1 hover:border-text-secondary transition-all">
                                     <h3 className={`text-xl font-bold mb-4 ${phase.color}`}>{phase.phase}</h3>
                                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                         {phase.items.map((item, j) => (
-                                            <div key={j} className="flex items-center gap-3 bg-white/5 p-3 rounded-lg">
-                                                <div className="w-6 h-6 rounded-full bg-black/30 flex items-center justify-center text-xs text-secondary font-mono">
+                                            <div key={j} className="flex items-center gap-3 bg-text-secondary/5 p-3 rounded-lg border border-border-primary">
+                                                <div className="w-6 h-6 rounded-full bg-text-secondary/10 flex items-center justify-center text-xs text-text-primary font-mono">
                                                     {i * 3 + j + 1}
                                                 </div>
-                                                <span className="text-sm font-medium text-white/90">{item}</span>
+                                                <span className="text-sm font-medium text-text-primary">{item}</span>
                                             </div>
                                         ))}
                                     </div>
@@ -123,7 +123,7 @@ const SystemPage = () => {
                                 "Garantit que les fondamentaux sont acquis",
                                 "Récompense l'action par la progression"
                             ].map((item, i) => (
-                                <li key={i} className="flex items-center gap-3 text-white">
+                                <li key={i} className="flex items-center gap-3 text-text-primary">
                                     <Check className="text-green-500" size={20} />
                                     {item}
                                 </li>
@@ -138,11 +138,11 @@ const SystemPage = () => {
 
                     {/* Visual Demo */}
                     <div className="flex-1 relative">
-                        <div className="relative z-10 bg-bg-primary p-6 rounded-2xl border border-white/10 shadow-2xl space-y-4 max-w-sm mx-auto transform rotate-2 hover:rotate-0 transition-transform duration-500">
+                        <div className="relative z-10 bg-bg-card p-6 rounded-2xl border border-border-primary shadow-lg space-y-4 max-w-sm mx-auto transform rotate-2 hover:rotate-0 transition-transform duration-500">
                             <div className="flex items-center justify-between p-4 bg-gradient-to-r from-green-500/10 to-transparent border border-green-500/20 rounded-xl">
                                 <div className="flex items-center gap-3">
                                     <Check className="text-green-500" size={20} />
-                                    <span className="font-bold text-white">Module 1 : Vision</span>
+                                    <span className="font-bold text-text-primary">Module 1 : Vision</span>
                                 </div>
                                 <Badge status="completed" className="bg-green-500/20 text-green-500 border-0">Validé</Badge>
                             </div>
@@ -151,17 +151,17 @@ const SystemPage = () => {
                                 <div className="absolute left-0 top-0 bottom-0 w-2/3 bg-cyan/5 z-0" />
                                 <div className="relative z-10 flex items-center gap-3">
                                     <Zap className="text-cyan fill-current" size={20} />
-                                    <span className="font-bold text-white">Module 2 : Marché</span>
+                                    <span className="font-bold text-text-primary">Module 2 : Marché</span>
                                 </div>
                                 <Badge status="in_progress" className="relative z-10">En cours</Badge>
                             </div>
 
-                            <div className="flex items-center justify-between p-4 bg-white/5 border border-white/5 rounded-xl opacity-50">
+                            <div className="flex items-center justify-between p-4 bg-text-secondary/10 border border-border-primary rounded-xl opacity-50">
                                 <div className="flex items-center gap-3">
                                     <Lock className="text-text-secondary" size={20} />
                                     <span className="font-bold text-text-secondary">Module 3 : Client</span>
                                 </div>
-                                <Badge status="locked" className="bg-white/5 text-white/30 border-0">Verrouillé</Badge>
+                                <Badge status="locked" className="bg-text-secondary/10 text-text-secondary border-0">Verrouillé</Badge>
                             </div>
                         </div>
 

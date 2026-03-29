@@ -87,7 +87,7 @@ const DeliverableForm = ({ moduleId, moduleOrder, moduleTitle, onSuccess, onCanc
 
     return (
         <Card className="p-6">
-            <h3 className="text-xl font-bold text-white mb-4">
+            <h3 className="text-xl font-bold text-text-primary mb-4">
                 Soumettre un livrable pour {moduleTitle}
             </h3>
             
@@ -113,11 +113,11 @@ const DeliverableForm = ({ moduleId, moduleOrder, moduleTitle, onSuccess, onCanc
                 </div>
                 
                 <div>
-                    <label className="block text-sm font-medium text-white mb-2">
+                    <label className="block text-sm font-medium text-text-primary mb-2">
                         Description / Contenu
                     </label>
                     <textarea
-                        className="w-full bg-bg-primary border border-white/10 rounded-lg px-4 py-3 text-white placeholder-text-secondary focus:outline-none focus:border-cyan resize-none"
+                        className="w-full bg-bg-primary border border-border-primary rounded-lg px-4 py-3 text-text-primary placeholder-text-secondary focus:outline-none focus:border-cyan resize-none"
                         rows="6"
                         placeholder="Décrivez votre livrable, vos réflexions, vos résultats..."
                         value={content}
@@ -126,10 +126,10 @@ const DeliverableForm = ({ moduleId, moduleOrder, moduleTitle, onSuccess, onCanc
                 </div>
                 
                 <div>
-                    <label className="block text-sm font-medium text-white mb-2">
+                    <label className="block text-sm font-medium text-text-primary mb-2">
                         Fichiers joints (optionnel)
                     </label>
-                    <div className="border-2 border-dashed border-white/10 rounded-lg p-6 text-center hover:border-cyan/30 transition-colors">
+                    <div className="border-2 border-dashed border-border-primary rounded-lg p-6 text-center hover:border-cyan/30 transition-colors">
                         <input
                             type="file"
                             id="file-upload"
@@ -158,12 +158,12 @@ const DeliverableForm = ({ moduleId, moduleOrder, moduleTitle, onSuccess, onCanc
                             {files.map((file, index) => (
                                 <div
                                     key={index}
-                                    className="flex items-center justify-between bg-bg-primary border border-white/10 rounded-lg p-3"
+                                    className="flex items-center justify-between bg-bg-primary border border-border-primary rounded-lg p-3"
                                 >
                                     <div className="flex items-center gap-3">
                                         <File className="text-cyan" size={20} />
                                         <div>
-                                            <p className="text-sm text-white">{file.name}</p>
+                                            <p className="text-sm text-text-primary">{file.name}</p>
                                             <p className="text-xs text-text-secondary">
                                                 {(file.size / 1024).toFixed(2)} KB
                                             </p>

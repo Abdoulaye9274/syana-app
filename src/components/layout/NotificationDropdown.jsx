@@ -34,9 +34,9 @@ const NotificationDropdown = ({ onClose }) => {
     }
 
     return (
-        <Card className="absolute top-12 right-0 w-80 md:w-96 p-0 z-50 shadow-2xl border-white/10 animate-in fade-in zoom-in-95 duration-200">
-            <div className="p-4 border-b border-white/5 flex justify-between items-center bg-white/5 backdrop-blur-xl rounded-t-2xl">
-                <h3 className="font-bold text-white text-sm">Notifications</h3>
+        <Card className="absolute top-12 right-0 w-80 md:w-96 p-0 z-50 shadow-2xl border-border-primary animate-in fade-in zoom-in-95 duration-200">
+            <div className="p-4 border-b border-border-primary flex justify-between items-center bg-bg-primary/50 backdrop-blur-xl rounded-t-2xl">
+                <h3 className="font-bold text-text-primary text-sm">Notifications</h3>
                 {notifications.length > 0 && (
                     <button onClick={clearAll} className="flex items-center gap-1 text-xs text-rose-500 hover:text-rose-400 transition-colors">
                         <Trash2 size={12} />
@@ -56,12 +56,12 @@ const NotificationDropdown = ({ onClose }) => {
                         <div
                             key={notification.id}
                             onClick={() => markAsRead(notification.id)}
-                            className={`p-4 border-b border-white/5 transition-colors cursor-pointer hover:bg-white/5 relative ${notification.read ? 'opacity-60' : 'bg-cyan/5'}`}
+                            className={`p-4 border-b border-border-primary transition-colors cursor-pointer hover:bg-bg-card-hover relative ${notification.read ? 'opacity-60' : 'bg-cyan/5'}`}
                         >
                             {!notification.read && (
                                 <span className="absolute top-4 right-4 w-2 h-2 rounded-full bg-cyan shadow-[0_0_10px_rgba(34,211,238,0.5)]" />
                             )}
-                            <h4 className="text-sm font-semibold text-white mb-1">{notification.title}</h4>
+                            <h4 className="text-sm font-semibold text-text-primary mb-1">{notification.title}</h4>
                             <p className="text-xs text-text-secondary mb-2">{notification.message}</p>
                             <span className="text-[10px] text-text-secondary/70 uppercase tracking-wider">{notification.time}</span>
                         </div>

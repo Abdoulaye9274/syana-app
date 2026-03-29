@@ -31,13 +31,13 @@ const AdviceCard = () => {
 
                     {loading ? (
                         <div className="animate-pulse space-y-3">
-                            <div className="h-6 bg-white/10 rounded w-3/4"></div>
-                            <div className="h-4 bg-white/10 rounded w-full"></div>
-                            <div className="h-4 bg-white/10 rounded w-5/6"></div>
+                            <div className="h-6 bg-border-primary rounded w-3/4"></div>
+                            <div className="h-4 bg-border-primary rounded w-full"></div>
+                            <div className="h-4 bg-border-primary rounded w-5/6"></div>
                         </div>
                     ) : (
                         <>
-                            <h3 className="text-xl font-bold text-white mb-2">
+                            <h3 className="text-xl font-bold text-text-primary mb-2">
                                 Info pour l'entrepreneur
                             </h3>
                             <p className="text-text-secondary text-sm leading-relaxed">
@@ -47,7 +47,7 @@ const AdviceCard = () => {
                     )}
                 </div>
 
-                <button className="flex items-center gap-2 text-sm font-bold text-white mt-6 hover:gap-3 transition-all">
+                <button className="flex items-center gap-2 text-sm font-bold text-text-primary mt-6 hover:gap-3 transition-all">
                     En savoir plus <ArrowRight size={16} />
                 </button>
             </div>

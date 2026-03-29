@@ -39,14 +39,14 @@ const Modal = ({
             />
 
             {/* Modal */}
-            <div className={`relative bg-bg-card border border-white/10 rounded-card shadow-lg w-full ${sizes[size]} ${className} animate-slide-up`}>
+            <div className={`relative bg-bg-card border border-border-primary rounded-card shadow-lg w-full ${sizes[size]} ${className} animate-slide-up`}>
                 {/* Header */}
                 {title && (
-                    <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
-                        <h3 className="text-xl font-semibold text-white">{title}</h3>
+                    <div className="flex items-center justify-between px-6 py-4 border-b border-border-primary">
+                        <h3 className="text-xl font-semibold text-text-primary">{title}</h3>
                         <button
                             onClick={onClose}
-                            className="text-text-secondary hover:text-white transition-colors"
+                            className="text-text-secondary hover:text-text-primary transition-colors"
                         >
                             <X size={24} />
                         </button>

@@ -66,10 +66,10 @@ const ReviewModal = ({ isOpen, onClose, moduleId, moduleName }) => {
             />
 
             {/* Modal */}
-            <div className="relative bg-bg-card border border-white/10 rounded-2xl p-8 w-full max-w-md shadow-2xl">
+            <div className="relative bg-bg-card border border-border-primary rounded-2xl p-8 w-full max-w-md shadow-2xl">
                 <button
                     onClick={handleClose}
-                    className="absolute top-4 right-4 text-text-secondary hover:text-white transition-colors"
+                    className="absolute top-4 right-4 text-text-secondary hover:text-text-primary transition-colors"
                 >
                     <X size={20} />
                 </button>
@@ -78,7 +78,7 @@ const ReviewModal = ({ isOpen, onClose, moduleId, moduleName }) => {
                     /* Thank you screen */
                     <div className="text-center py-4">
                         <div className="text-5xl mb-4">🎉</div>
-                        <h3 className="text-xl font-bold text-white mb-2">Merci pour votre avis !</h3>
+                        <h3 className="text-xl font-bold text-text-primary mb-2">Merci pour votre avis !</h3>
                         <p className="text-text-secondary text-sm mb-6">
                             Votre retour nous aide à améliorer la formation.
                         </p>
@@ -89,12 +89,12 @@ const ReviewModal = ({ isOpen, onClose, moduleId, moduleName }) => {
                     <>
                         <div className="text-center mb-8">
                             <div className="text-3xl mb-3">💬</div>
-                            <h3 className="text-xl font-bold text-white mb-2">
+                            <h3 className="text-xl font-bold text-text-primary mb-2">
                                 Ce cours vous permet-il de progresser ?
                             </h3>
                             {moduleName && (
                                 <p className="text-text-secondary text-sm">
-                                    Module : <span className="text-white font-medium">{moduleName}</span>
+                                    Module : <span className="text-text-primary font-medium">{moduleName}</span>
                                 </p>
                             )}
                         </div>
@@ -105,7 +105,7 @@ const ReviewModal = ({ isOpen, onClose, moduleId, moduleName }) => {
                                 onClick={() => setRating('up')}
                                 className={`flex flex-col items-center gap-2 p-5 rounded-xl border-2 transition-all ${rating === 'up'
                                         ? 'border-green-500 bg-green-500/10 text-green-400 scale-105'
-                                        : 'border-white/10 bg-white/5 text-text-secondary hover:border-white/30'
+                                        : 'border-border-primary bg-bg-card-hover text-text-secondary hover:border-border-primary'
                                     }`}
                             >
                                 <ThumbsUp size={28} />
@@ -114,8 +114,8 @@ const ReviewModal = ({ isOpen, onClose, moduleId, moduleName }) => {
                             <button
                                 onClick={() => setRating('down')}
                                 className={`flex flex-col items-center gap-2 p-5 rounded-xl border-2 transition-all ${rating === 'down'
-                                        ? 'border-red-500 bg-red-500/10 text-red-400 scale-105'
-                                        : 'border-white/10 bg-white/5 text-text-secondary hover:border-white/30'
+                                        ? 'border-red-500 bg-red-500/10 text-red-500 scale-105'
+                                        : 'border-border-primary bg-bg-card-hover text-text-secondary hover:border-border-primary'
                                     }`}
                             >
                                 <ThumbsDown size={28} />
@@ -125,7 +125,7 @@ const ReviewModal = ({ isOpen, onClose, moduleId, moduleName }) => {
 
                         {/* Optional comment */}
                         <div className="mb-6">
-                            <label className="text-sm text-white font-medium block mb-2">
+                            <label className="text-sm text-text-primary font-medium block mb-2">
                                 Un commentaire ? <span className="text-text-secondary font-normal">(optionnel)</span>
                             </label>
                             <textarea
@@ -133,14 +133,14 @@ const ReviewModal = ({ isOpen, onClose, moduleId, moduleName }) => {
                                 onChange={e => setComment(e.target.value)}
                                 placeholder="Dites-nous ce qui pourrait être amélioré…"
                                 rows={3}
-                                className="w-full bg-bg-primary border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder:text-text-secondary focus:border-cyan/50 focus:ring-1 focus:ring-cyan/50 outline-none resize-none transition-colors"
+                                className="w-full bg-bg-primary border border-border-primary rounded-lg px-4 py-3 text-sm text-text-primary placeholder:text-text-secondary focus:border-cyan/50 focus:ring-1 focus:ring-cyan/50 outline-none resize-none transition-colors"
                             />
                         </div>
 
                         <div className="flex gap-3">
                             <button
                                 onClick={handleClose}
-                                className="flex-1 py-3 rounded-lg border border-white/10 text-text-secondary hover:text-white hover:border-white/30 text-sm font-medium transition-colors"
+                                className="flex-1 py-3 rounded-lg border border-border-primary text-text-secondary hover:text-text-primary hover:border-text-secondary text-sm font-medium transition-colors"
                             >
                                 Passer
                             </button>

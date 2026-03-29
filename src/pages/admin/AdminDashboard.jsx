@@ -107,32 +107,32 @@ const AdminDashboard = () => {
                 {/* Header Stats */}
                 <div className="flex items-center gap-3 mb-8">
                     <ShieldCheck className="text-cyan" size={32} />
-                    <h1 className="text-3xl font-bold text-white">Panneau de Contrôle Admin</h1>
+                    <h1 className="text-3xl md:text-4xl font-black text-text-primary tracking-tight">Panneau de Contrôle Admin</h1>
                 </div>
 
                 {/* TABS NAVIGATION */}
-                <div className="flex gap-4 mb-8 border-b border-white/10 pb-1 overflow-x-auto">
+                <div className="flex gap-4 mb-8 border-b border-border-primary pb-1 overflow-x-auto">
                     <button
                         onClick={() => setActiveTab('users')}
-                        className={`px-4 py-3 text-sm font-medium flex items-center gap-2 transition-colors border-b-2 ${activeTab === 'users' ? 'border-cyan text-cyan' : 'border-transparent text-text-secondary hover:text-white'}`}
+                        className={`px-4 py-3 text-sm font-bold flex items-center gap-2 transition-colors border-b-2 ${activeTab === 'users' ? 'border-cyan text-cyan' : 'border-transparent text-text-secondary hover:text-text-primary'}`}
                     >
                         <Users size={18} /> Utilisateurs
                     </button>
                     <button
                         onClick={() => setActiveTab('content')}
-                        className={`px-4 py-3 text-sm font-medium flex items-center gap-2 transition-colors border-b-2 ${activeTab === 'content' ? 'border-cyan text-cyan' : 'border-transparent text-text-secondary hover:text-white'}`}
+                        className={`px-4 py-3 text-sm font-bold flex items-center gap-2 transition-colors border-b-2 ${activeTab === 'content' ? 'border-cyan text-cyan' : 'border-transparent text-text-secondary hover:text-text-primary'}`}
                     >
                         <TrendingUp size={18} /> Modules & Contenu
                     </button>
                     <button
                         onClick={() => setActiveTab('deliverables')}
-                        className={`px-4 py-3 text-sm font-medium flex items-center gap-2 transition-colors border-b-2 ${activeTab === 'deliverables' ? 'border-cyan text-cyan' : 'border-transparent text-text-secondary hover:text-white'}`}
+                        className={`px-4 py-3 text-sm font-bold flex items-center gap-2 transition-colors border-b-2 ${activeTab === 'deliverables' ? 'border-cyan text-cyan' : 'border-transparent text-text-secondary hover:text-text-primary'}`}
                     >
                         <FileCheck size={18} /> Livrables
                     </button>
                     <button
                         onClick={() => setActiveTab('reviews')}
-                        className={`px-4 py-3 text-sm font-medium flex items-center gap-2 transition-colors border-b-2 ${activeTab === 'reviews' ? 'border-cyan text-cyan' : 'border-transparent text-text-secondary hover:text-white'}`}
+                        className={`px-4 py-3 text-sm font-bold flex items-center gap-2 transition-colors border-b-2 ${activeTab === 'reviews' ? 'border-cyan text-cyan' : 'border-transparent text-text-secondary hover:text-text-primary'}`}
                     >
                         <Star size={18} /> Avis
                     </button>
@@ -151,12 +151,12 @@ const AdminDashboard = () => {
                     {/* Right Sidebar: Tools & Actions */}
                     <div className="space-y-6">
                         {/* Quick Stats Cards (Always Visible Sidebar Version) */}
-                        <div className="bg-bg-card/30 border border-white/5 rounded-2xl p-6 space-y-4">
-                            <h3 className="text-lg font-bold text-white mb-2">Aperçu</h3>
+                        <div className="bg-bg-card border border-border-primary rounded-2xl p-6 space-y-4 shadow-sm">
+                            <h3 className="text-lg font-bold text-text-primary mb-2">Aperçu</h3>
 
                             <div className="flex justify-between items-center text-sm">
                                 <span className="text-text-secondary">Utilisateurs</span>
-                                <span className="text-white font-bold">{stats.totalUsers}</span>
+                                <span className="text-text-primary font-bold">{stats.totalUsers}</span>
                             </div>
                             <div className="flex justify-between items-center text-sm">
                                 <span className="text-text-secondary">Abonnés</span>
@@ -170,12 +170,12 @@ const AdminDashboard = () => {
 
                         {/* Quick Actions */}
                         {activeTab === 'content' && (
-                            <Card className="p-6 bg-bg-card/30 border-white/5">
-                                <h3 className="text-lg font-bold text-white mb-4">🛠️ Outils Contenu</h3>
+                            <Card className="p-6 bg-bg-card border-border-primary shadow-sm">
+                                <h3 className="text-lg font-bold text-text-primary mb-4">🛠️ Outils Contenu</h3>
                                 <div className="space-y-6">
                                     <AdminSeeder />
 
-                                    <div className="pt-6 border-t border-white/10">
+                                    <div className="pt-6 border-t border-border-primary">
                                         <AdminTipEditor />
                                     </div>
                                 </div>
@@ -193,7 +193,7 @@ const AdminDashboard = () => {
                                         <p className="text-xs text-text-secondary mt-1">
                                             {stats.pendingDeliverables} livrable(s) en attente.
                                             <br />
-                                            <button onClick={() => setActiveTab('deliverables')} className="underline hover:text-white">Voir maintenant</button>
+                                            <button onClick={() => setActiveTab('deliverables')} className="underline hover:text-text-primary">Voir maintenant</button>
                                         </p>
                                     </div>
                                 </div>

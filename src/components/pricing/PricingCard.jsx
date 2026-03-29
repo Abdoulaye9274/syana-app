@@ -16,19 +16,19 @@ const PricingCard = ({ plan }) => {
 
             <Card
                 variant={recommended ? 'gradient' : 'default'}
-                className={`flex flex-col h-full p-8 ${recommended ? 'border-none shadow-glow-violet' : 'border-white/5 hover:border-white/10'}`}
+                className={`flex flex-col h-full p-8 ${recommended ? 'border-none shadow-glow-violet' : 'border-border-primary hover:border-text-secondary'}`}
             >
                 <div className="mb-6">
-                    <h3 className={`text-2xl font-bold mb-1 ${recommended ? 'text-white' : 'text-white'}`}>
+                    <h3 className={`text-2xl font-bold mb-1 ${recommended ? 'text-white' : 'text-text-primary'}`}>
                         {name}
                     </h3>
                     {subtitle && (
-                        <p className={`text-sm font-medium mb-4 ${recommended ? 'text-white/80' : color}`}>
+                        <p className={`text-sm font-medium mb-4 ${recommended ? 'text-white/80' : 'text-text-secondary'}`}>
                             {subtitle}
                         </p>
                     )}
                     <div className="flex items-baseline gap-1">
-                        <span className={`text-4xl font-bold ${recommended ? 'text-white' : 'text-white'}`}>
+                        <span className={`text-4xl font-bold ${recommended ? 'text-white' : 'text-text-primary'}`}>
                             {price}€
                         </span>
                         <span className={`text-sm ${recommended ? 'text-white/80' : 'text-text-secondary'}`}>/{interval}</span>

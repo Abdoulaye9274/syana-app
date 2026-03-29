@@ -11,7 +11,7 @@ const ContactPage = () => {
             <main className="pt-32 pb-20 px-6">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-16">
-                        <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                        <h1 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
                             Contactez-nous
                         </h1>
                         <p className="text-xl text-text-secondary max-w-2xl mx-auto">
@@ -23,7 +23,7 @@ const ContactPage = () => {
                         {/* Contact Info */}
                         <div className="space-y-8">
                             <Card className="p-8">
-                                <h2 className="text-2xl font-bold text-white mb-8">Informations de contact</h2>
+                                <h2 className="text-2xl font-bold text-text-primary mb-8">Informations de contact</h2>
 
                                 <div className="space-y-6">
                                     <div className="flex items-start gap-4">
@@ -32,7 +32,7 @@ const ContactPage = () => {
                                         </div>
                                         <div>
                                             <p className="text-sm text-text-secondary mb-1">Email</p>
-                                            <a href="mailto:contact@sarahdigitalimpact.com" className="text-lg text-white hover:text-cyan transition-colors">
+                                            <a href="mailto:contact@sarahdigitalimpact.com" className="text-lg text-text-primary hover:text-cyan transition-colors">
                                                 contact@sarahdigitalimpact.com
                                             </a>
                                         </div>
@@ -44,7 +44,7 @@ const ContactPage = () => {
                                         </div>
                                         <div>
                                             <p className="text-sm text-text-secondary mb-1">Téléphone</p>
-                                            <a href="tel:+33745047086" className="text-lg text-white hover:text-purple-500 transition-colors">
+                                            <a href="tel:+33745047086" className="text-lg text-text-primary hover:text-purple-500 transition-colors">
                                                 +33 7 45 04 70 86
                                             </a>
                                         </div>
@@ -56,7 +56,7 @@ const ContactPage = () => {
                                         </div>
                                         <div>
                                             <p className="text-sm text-text-secondary mb-1">Localisation</p>
-                                            <p className="text-lg text-white">
+                                            <p className="text-lg text-text-primary">
                                                 France / International
                                             </p>
                                         </div>
@@ -65,7 +65,7 @@ const ContactPage = () => {
                             </Card>
 
                             <Card className="p-8 bg-gradient-to-br from-cyan/5 to-purple-500/5 border-cyan/20">
-                                <h3 className="text-xl font-bold text-white mb-4">Support WhatsApp</h3>
+                                <h3 className="text-xl font-bold text-text-primary mb-4">Support WhatsApp</h3>
                                 <p className="text-text-secondary mb-6">
                                     Besoin d'une réponse ultra-rapide ? Nos experts sont disponibles sur WhatsApp pour vous guider.
                                 </p>
@@ -80,7 +80,7 @@ const ContactPage = () => {
 
                         {/* Contact Form */}
                         <Card className="p-8">
-                            <h2 className="text-2xl font-bold text-white mb-8">Envoyez-nous un message</h2>
+                            <h2 className="text-2xl font-bold text-text-primary mb-8">Envoyez-nous un message</h2>
                             <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
@@ -103,7 +103,7 @@ const ContactPage = () => {
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-text-secondary">Message</label>
                                     <textarea
-                                        className="w-full bg-bg-primary border border-white/10 rounded-xl p-4 text-white placeholder:text-text-tertiary focus:outline-none focus:border-cyan/50 focus:ring-1 focus:ring-cyan/50 min-h-[150px] transition-all"
+                                        className="w-full bg-bg-primary border border-border-primary rounded-xl p-4 text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-cyan/50 focus:ring-1 focus:ring-cyan/50 min-h-[150px] transition-all"
                                         placeholder="Décrivez votre besoin ici..."
                                     />
                                 </div>

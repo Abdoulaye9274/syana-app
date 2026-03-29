@@ -2,7 +2,7 @@ import { MessageCircle } from 'lucide-react'
 
 const WhatsAppButton = ({
     phoneNumber = "33745047086",
-    message = "Bonjour je souhaite des informations"
+    message = "Bonjour, je souhaite des informations concernant Syana."
 }) => {
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
 
@@ -16,8 +16,8 @@ const WhatsAppButton = ({
         >
             <MessageCircle className="w-7 h-7" />
 
-            {/* Tooltip discret au survol */}
-            <span className="absolute right-16 bg-white dark:bg-slate-800 text-slate-800 dark:text-white px-3 py-1.5 rounded-lg text-sm font-medium shadow-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-slate-100 dark:border-slate-700">
+            {/* Tooltip */}
+            <span className="absolute right-16 bg-bg-primary text-text-primary px-3 py-1.5 rounded-lg text-sm font-medium shadow-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-border-primary">
                 Besoin d'aide ?
             </span>
         </a>

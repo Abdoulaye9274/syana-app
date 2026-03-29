@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 const HomePage = () => {
     return (
-        <div className="min-h-screen bg-bg-primary font-sans text-white selection:bg-cyan/30">
+        <div className="min-h-screen bg-bg-primary font-sans text-text-primary selection:bg-cyan/30">
             <Navbar />
 
             {/* HERO SECTION */}
@@ -22,7 +22,7 @@ const HomePage = () => {
                     <div className="flex justify-center mb-6">
                         <div className="relative group">
                             <div className="absolute inset-0 bg-gradient-to-r from-cyan to-violet blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-500 rounded-2xl" />
-                            <div className="relative bg-white/5 backdrop-blur-xl border border-white/10 px-8 py-3 rounded-2xl shadow-2xl">
+                            <div className="relative bg-text-secondary/10 backdrop-blur-xl border border-border-primary px-8 py-3 rounded-2xl shadow-2xl">
                                 <span className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan via-violet to-fuchsia-400 tracking-wider">
                                     SYANA
                                 </span>
@@ -53,7 +53,7 @@ const HomePage = () => {
                             </Button>
                         </Link>
                         <Link to="/demo">
-                            <Button variant="secondary" size="lg" className="h-14 px-8 rounded-full border-white/10 hover:bg-white/5 text-base">
+                            <Button variant="secondary" size="lg" className="h-14 px-8 rounded-full border-border-primary hover:bg-bg-card-hover text-base">
                                 <Play className="mr-2 w-4 h-4 fill-current" />
                                 Voir la démo
                             </Button>
@@ -61,14 +61,14 @@ const HomePage = () => {
                     </div>
 
                     {/* Stats Grid */}
-                    <div className="grid grid-cols-3 gap-4 md:gap-12 pt-16 mt-8 border-t border-white/5 w-full max-w-3xl mx-auto">
+                    <div className="grid grid-cols-3 gap-4 md:gap-12 pt-16 mt-8 border-t border-border-primary w-full max-w-3xl mx-auto">
                         {[
                             { val: '14', label: 'modules guidés' },
                             { val: '∞', label: 'illimité' },
                             { val: '1', label: 'objectif clair' }
                         ].map((stat, i) => (
-                            <div key={i} className="flex flex-col items-center p-4 rounded-2xl bg-white/5 border border-white/5 backdrop-blur-sm">
-                                <span className="text-2xl md:text-3xl font-bold text-white mb-1">{stat.val}</span>
+                            <div key={i} className="flex flex-col items-center p-4 rounded-2xl bg-text-secondary/10 border border-border-primary backdrop-blur-sm">
+                                <span className="text-2xl md:text-3xl font-bold text-text-primary mb-1">{stat.val}</span>
                                 <span className="text-xs md:text-sm text-text-secondary uppercase tracking-wider">{stat.label}</span>
                             </div>
                         ))}
@@ -90,11 +90,11 @@ const HomePage = () => {
                             { title: "Modules progressifs", desc: "Avancez à votre rythme avec des étapes verrouillées pour assurer votre progression.", icon: "📈" },
                             { title: "Résultats concrets", desc: "Plus de théorie abstraite. Uniquement du pratique et des livrables validés.", icon: "🎯" }
                         ].map((item, i) => (
-                            <div key={i} className="bg-[#0F1219] p-8 rounded-3xl border border-white/5 hover:border-cyan/30 transition-all duration-300 group">
+                            <div key={i} className="bg-bg-card p-8 rounded-3xl border border-border-primary hover:border-cyan/30 transition-all duration-300 group">
                                 <div className="w-12 h-12 rounded-xl bg-cyan/10 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
                                     {item.icon}
                                 </div>
-                                <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
+                                <h3 className="text-xl font-bold text-text-primary mb-3">{item.title}</h3>
                                 <p className="text-text-secondary text-sm leading-relaxed">{item.desc}</p>
                             </div>
                         ))}
@@ -106,7 +106,7 @@ const HomePage = () => {
             <section className="py-32 bg-bg-primary relative overflow-hidden">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="text-center mb-20">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Le système guidé</h2>
+                        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-text-primary">Le système guidé</h2>
                         <p className="text-text-secondary">De l'idée à la scalabilité</p>
                     </div>
 
@@ -124,7 +124,7 @@ const HomePage = () => {
                                     {s.step}
                                 </div>
                                 <div className="h-1 w-20 bg-cyan rounded-full mb-6" />
-                                <h3 className="text-2xl font-bold text-white mb-2">{s.title}</h3>
+                                <h3 className="text-2xl font-bold text-text-primary mb-2">{s.title}</h3>
                                 <p className="text-text-secondary">{s.subtitle}</p>
                             </div>
                         ))}
@@ -132,7 +132,7 @@ const HomePage = () => {
 
                     <div className="mt-20 text-center">
                         <Link to="/systeme">
-                            <Button variant="secondary" className="rounded-full px-8 border-white/10 hover:border-white/30 bg-transparent">
+                            <Button variant="secondary" className="rounded-full px-8 border-border-primary hover:border-text-secondary bg-transparent">
                                 Découvrir le système complet <ArrowRight className="ml-2 w-4 h-4" />
                             </Button>
                         </Link>
@@ -144,7 +144,7 @@ const HomePage = () => {
             <section className="py-24 bg-bg-secondary relative">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ils ont structuré leur business</h2>
+                        <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-4">Ils ont structuré leur business</h2>
                         <p className="text-text-secondary">Concrètement, qu'est-ce que ça change ?</p>
                     </div>
 
@@ -169,15 +169,15 @@ const HomePage = () => {
                                 avatar: "LP"
                             }
                         ].map((t, i) => (
-                            <div key={i} className="bg-[#0F1219] p-8 rounded-2xl border border-white/5 relative">
+                            <div key={i} className="bg-bg-card p-8 rounded-2xl border border-border-primary relative">
                                 <Quote className="text-cyan/20 absolute top-6 right-6" size={40} />
-                                <p className="text-white/80 text-lg leading-relaxed mb-6 italic">"{t.text}"</p>
+                                <p className="text-text-secondary text-lg leading-relaxed mb-6 italic">"{t.text}"</p>
                                 <div className="flex items-center gap-4">
                                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan to-blue-500 flex items-center justify-center text-white font-bold text-xs">
                                         {t.avatar}
                                     </div>
                                     <div>
-                                        <div className="font-bold text-white">{t.author}</div>
+                                        <div className="font-bold text-text-primary">{t.author}</div>
                                         <div className="text-xs text-text-secondary">{t.role}</div>
                                     </div>
                                 </div>

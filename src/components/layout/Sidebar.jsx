@@ -62,7 +62,7 @@ const Sidebar = () => {
                         >
                             <Icon
                                 size={20}
-                                className={`transition-colors duration-300 ${active ? 'text-cyan' : 'text-text-secondary group-hover:text-white'}`}
+                                className={`transition-colors duration-300 ${active ? 'text-cyan' : 'text-text-secondary group-hover:text-text-primary'}`}
                             />
                             <span className="font-medium text-sm">{item.name}</span>
                         </Link>

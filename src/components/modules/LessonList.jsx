@@ -5,14 +5,14 @@ const LessonList = ({ lessons = [], activeLessonIndex = 0, onLessonSelect }) => 
     const totalLessons = lessons.length
 
     return (
-        <div className="bg-bg-secondary w-full lg:w-96 border-l border-white/5 flex flex-col h-full">
-            <div className="p-6 border-b border-white/5">
-                <h3 className="font-bold text-white mb-1">Programme du module</h3>
+        <div className="bg-bg-secondary w-full lg:w-96 border-l border-border-primary flex flex-col h-full">
+            <div className="p-6 border-b border-border-primary">
+                <h3 className="font-bold text-text-primary mb-1">Programme du module</h3>
                 <div className="flex justify-between text-xs text-text-secondary">
                     <span>{totalLessons} leçons</span>
                     {/* Placeholder for total duration calculation */}
                 </div>
-                <div className="mt-4 h-1 bg-white/10 rounded-full overflow-hidden">
+                <div className="mt-4 h-1 bg-border-primary rounded-full overflow-hidden">
                     <div
                         className="h-full bg-gradient-primary rounded-full transition-all duration-500"
                         style={{ width: `${((activeLessonIndex) / totalLessons) * 100}%` }}
@@ -30,8 +30,8 @@ const LessonList = ({ lessons = [], activeLessonIndex = 0, onLessonSelect }) => 
                             key={index}
                             onClick={() => onLessonSelect && onLessonSelect(index)}
                             className={`
-                              p-4 border-b border-white/5 transition-colors cursor-pointer relative
-                              ${isActive ? 'bg-cyan/5 border-l-2 border-l-cyan' : 'hover:bg-white/5 border-l-2 border-l-transparent'}
+                              p-4 border-b border-border-primary transition-colors cursor-pointer relative
+                              ${isActive ? 'bg-cyan/5 border-l-2 border-l-cyan' : 'hover:bg-bg-card-hover border-l-2 border-l-transparent'}
                             `}
                         >
                             <div className="flex gap-3">
@@ -43,11 +43,11 @@ const LessonList = ({ lessons = [], activeLessonIndex = 0, onLessonSelect }) => 
                                             <div className="w-2 h-2 rounded-full bg-cyan animate-pulse" />
                                         </div>
                                     ) : (
-                                        <div className="w-4 h-4 rounded-full border-2 border-white/20" />
+                                        <div className="w-4 h-4 rounded-full border-2 border-border-primary" />
                                     )}
                                 </div>
                                 <div>
-                                    <p className={`text-sm font-medium mb-1 ${isActive ? 'text-cyan' : 'text-white'}`}>
+                                    <p className={`text-sm font-medium mb-1 ${isActive ? 'text-cyan' : 'text-text-primary'}`}>
                                         {index + 1}. {lesson.title}
                                     </p>
                                     <div className="flex items-center gap-2 text-xs text-text-secondary">

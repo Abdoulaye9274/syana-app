@@ -41,7 +41,7 @@ const Dashboard = () => {
         >
             <div className="space-y-8">
                 {/* Stats Row */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <StatCard
                         label="Modules complétés"
                         value={`${stats.completedModules}/${totalModules}`}

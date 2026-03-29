@@ -42,19 +42,19 @@ const RequireAdmin = ({ children }) => {
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" /></svg>
                     </div>
 
-                    <h1 className="text-2xl font-bold text-white mb-2">Accès Refusé</h1>
+                    <h1 className="text-2xl font-bold text-text-primary mb-2">Accès Refusé</h1>
                     <p className="text-text-secondary mb-8">
                         Le système ne détecte pas les droits d'administration sur ce profil.
                     </p>
 
-                    <div className="bg-black/50 rounded-lg border border-white/5 p-4 mb-8 text-left font-mono text-xs overflow-x-auto max-h-60 custom-scrollbar">
-                        <div className="grid grid-cols-[100px_1fr] gap-2 mb-2 pb-2 border-b border-white/10">
+                    <div className="bg-bg-card-hover/50 rounded-lg border border-border-primary p-4 mb-8 text-left font-mono text-xs overflow-x-auto max-h-60 custom-scrollbar">
+                        <div className="grid grid-cols-[100px_1fr] gap-2 mb-2 pb-2 border-b border-border-primary">
                             <span className="text-text-secondary">UID (Auth):</span>
                             <span className="text-cyan font-bold select-all">{user?.uid}</span>
                         </div>
-                        <div className="grid grid-cols-[100px_1fr] gap-2 mb-2 pb-2 border-b border-white/10">
+                        <div className="grid grid-cols-[100px_1fr] gap-2 mb-2 pb-2 border-b border-border-primary">
                             <span className="text-text-secondary">Email:</span>
-                            <span className="text-white select-all">{user?.email}</span>
+                            <span className="text-text-primary select-all">{user?.email}</span>
                         </div>
                         <div className="grid grid-cols-[100px_1fr] gap-2 mb-4">
                             <span className="text-text-secondary">Rôle détecté:</span>
@@ -72,13 +72,13 @@ const RequireAdmin = ({ children }) => {
                     <div className="flex flex-col sm:flex-row gap-3 justify-center">
                         <button
                             onClick={handleRefresh}
-                            className="bg-white/10 text-white font-medium py-2 px-6 rounded-lg hover:bg-white/20 transition-colors border border-white/10"
+                            className="bg-text-secondary/10 text-text-primary font-medium py-2 px-6 rounded-lg hover:bg-text-secondary/20 transition-colors border border-border-primary"
                         >
                             Rafraîchir la page
                         </button>
                         <button
                             onClick={() => window.location.href = '/tableau-de-bord'}
-                            className="bg-white text-black font-bold py-2 px-6 rounded-lg hover:bg-white/90 transition-colors shadow-lg shadow-white/10"
+                            className="bg-text-primary text-bg-primary font-bold py-2 px-6 rounded-lg hover:opacity-90 transition-opacity shadow-none"
                         >
                             Retour au Dashboard
                         </button>

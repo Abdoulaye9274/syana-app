@@ -32,7 +32,7 @@ const NextModulesList = () => {
     if (nextModules.length === 0) {
         return (
             <Card className="h-full flex flex-col justify-center text-center p-6">
-                <h3 className="font-bold text-white text-lg mb-2">Félicitations ! 🎉</h3>
+                <h3 className="font-bold text-text-primary text-lg mb-2">Félicitations ! 🎉</h3>
                 <p className="text-text-secondary text-sm">
                     Vous avez atteint le dernier module disponible.
                 </p>
@@ -43,7 +43,7 @@ const NextModulesList = () => {
     return (
         <Card>
             <div className="flex items-center justify-between mb-6">
-                <h3 className="font-bold text-white text-lg">Prochains modules</h3>
+                <h3 className="font-bold text-text-primary text-lg">Prochains modules</h3>
                 <span className="text-xs text-text-secondary uppercase tracking-wider font-semibold">
                     VERROUILLÉS
                 </span>
@@ -53,7 +53,7 @@ const NextModulesList = () => {
                 {nextModules.map((module) => (
                     <div
                         key={module.id}
-                        className="flex items-center gap-4 p-3 rounded-lg border border-white/5 bg-white/5 opacity-70"
+                        className="flex items-center gap-4 p-3 rounded-lg border border-border-primary bg-bg-card-hover opacity-70"
                     >
                         <div className="w-10 h-10 rounded-lg bg-text-secondary/10 flex items-center justify-center text-text-secondary">
                             <Lock size={18} />
@@ -62,7 +62,7 @@ const NextModulesList = () => {
                             <p className="text-xs text-text-secondary font-bold uppercase tracking-wider mb-0.5">
                                 MODULE {module.order}
                             </p>
-                            <h4 className="text-sm font-semibold text-white/50">
+                            <h4 className="text-sm font-semibold text-text-secondary">
                                 {module.title}
                             </h4>
                         </div>
@@ -70,7 +70,7 @@ const NextModulesList = () => {
                 ))}
 
                 <div className="pt-2 flex justify-end">
-                    <Link to="/modules" className="text-xs text-cyan hover:text-white flex items-center gap-1 transition-colors">
+                    <Link to="/modules" className="text-xs text-cyan hover:text-text-primary flex items-center gap-1 transition-colors">
                         Voir tout le programme <ArrowRight size={12} />
                     </Link>
                 </div>

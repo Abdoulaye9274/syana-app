@@ -7,7 +7,7 @@ const Loading = ({ size = 'md', className = '' }) => {
 
     return (
         <div className={`flex items-center justify-center ${className}`}>
-            <div className={`${sizes[size]} border-4 border-white/20 border-t-cyan rounded-full animate-spin`} />
+            <div className={`${sizes[size]} border-4 border-border-primary border-t-cyan rounded-full animate-spin`} />
         </div>
     )
 }

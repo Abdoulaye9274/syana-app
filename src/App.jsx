@@ -25,6 +25,9 @@ const SupportPage = lazy(() => import('./pages/marketing/SupportPage'))
 const FaqPage = lazy(() => import('./pages/marketing/FaqPage'))
 const ContactPage = lazy(() => import('./pages/marketing/ContactPage'))
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'))
+const CguPage = lazy(() => import('./pages/legal/CguPage'))
+const PrivacyPage = lazy(() => import('./pages/legal/PrivacyPage'))
+const LegalNoticePage = lazy(() => import('./pages/legal/LegalNoticePage'))
 
 const PageLoader = () => (
     <div className="min-h-screen bg-bg-primary flex items-center justify-center">
@@ -47,6 +50,9 @@ function App() {
                             <Route path="/support" element={<SupportPage />} />
                             <Route path="/faq" element={<FaqPage />} />
                             <Route path="/contact" element={<ContactPage />} />
+                            <Route path="/cgu" element={<CguPage />} />
+                            <Route path="/confidentialite" element={<PrivacyPage />} />
+                            <Route path="/mentions-legales" element={<LegalNoticePage />} />
 
                             {/* Auth Routes */}
                             <Route path="/connexion" element={<Login />} />

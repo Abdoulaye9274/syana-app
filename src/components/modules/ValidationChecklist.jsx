@@ -98,10 +98,10 @@ const ValidationChecklist = ({ moduleId, moduleOrder, items = [], onValidated })
     }
 
     return (
-        <Card className="border-white/5 bg-bg-card/30">
+        <Card className="border-border-primary bg-bg-card/30">
             <div className="flex items-start justify-between gap-4 mb-6">
                 <div>
-                    <h3 className="text-lg font-bold text-white">Validation — Version 1</h3>
+                    <h3 className="text-lg font-bold text-text-primary">Validation — Version 1</h3>
                     <p className="text-sm text-text-secondary">
                         Coche chaque étape pour confirmer ta progression.
                     </p>
@@ -123,15 +123,15 @@ const ValidationChecklist = ({ moduleId, moduleOrder, items = [], onValidated })
                     {checklistItems.map((item, idx) => (
                         <label
                             key={`${idx}-${item.label}`}
-                            className="flex items-center gap-3 bg-bg-primary/30 border border-white/5 rounded-xl px-4 py-3 cursor-pointer hover:border-white/10 transition-colors"
+                            className="flex items-center gap-3 bg-bg-primary/30 border border-border-primary rounded-xl px-4 py-3 cursor-pointer hover:border-text-secondary transition-colors"
                         >
                             <input
                                 type="checkbox"
                                 checked={Boolean(item.completed)}
                                 onChange={() => toggleItem(idx)}
-                                className="h-4 w-4 rounded border-white/20 bg-bg-primary text-cyan focus:ring-cyan/20"
+                                className="h-4 w-4 rounded border-border-primary bg-bg-primary text-cyan focus:ring-cyan/20"
                             />
-                            <span className="text-sm text-white/90">{item.label}</span>
+                            <span className="text-sm text-text-primary">{item.label}</span>
                         </label>
                     ))}
                 </div>

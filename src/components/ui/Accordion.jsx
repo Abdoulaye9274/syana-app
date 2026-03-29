@@ -3,12 +3,12 @@ import { ChevronDown } from 'lucide-react'
 
 const AccordionItem = ({ title, children, isOpen, onToggle }) => {
     return (
-        <div className="border border-white/10 rounded-card overflow-hidden mb-3">
+        <div className="border border-border-primary rounded-card overflow-hidden mb-3">
             <button
                 onClick={onToggle}
                 className="w-full px-6 py-4 flex items-center justify-between bg-bg-card hover:bg-bg-card-hover transition-colors"
             >
-                <span className="font-medium text-white text-left">{title}</span>
+                <span className="font-medium text-text-primary text-left">{title}</span>
                 <ChevronDown
                     size={20}
                     className={`text-text-secondary transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}

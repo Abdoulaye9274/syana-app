@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Sun, Moon } from 'lucide-react'
 import { useState } from 'react'
+import { useTheme } from '@/context/ThemeContext'
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const { theme, toggleTheme } = useTheme()
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
 
@@ -16,7 +18,7 @@ const Navbar = () => {
     ]
 
     return (
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-bg-primary/80 backdrop-blur-md border-b border-white/5">
+        <nav className="fixed top-0 left-0 right-0 z-50 bg-bg-primary/80 backdrop-blur-md border-b border-border-primary">
             <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
                 {/* Logo */}
                 <Link to="/" className="flex items-center gap-3">
@@ -33,7 +35,7 @@ const Navbar = () => {
                         <Link
                             key={link.label}
                             to={link.href}
-                            className="text-text-secondary hover:text-white font-medium transition-colors text-sm"
+                            className="text-text-secondary hover:text-text-primary font-medium transition-colors text-sm"
                         >
                             {link.label}
                         </Link>
@@ -42,7 +44,14 @@ const Navbar = () => {
 
                 {/* Desktop CTA */}
                 <div className="hidden md:flex items-center gap-4">
-                    <Link to="/connexion" className="text-white hover:text-cyan font-medium transition-colors text-sm">
+                    <button
+                        onClick={toggleTheme}
+                        className="text-text-secondary hover:text-text-primary transition-colors focus:outline-none"
+                        aria-label="Changer le thème"
+                    >
+                        {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+                    </button>
+                    <Link to="/connexion" className="text-text-primary hover:text-cyan font-medium transition-colors text-sm">
                         Se connecter
                     </Link>
                     <Link to="/inscription">
@@ -52,32 +61,40 @@ const Navbar = () => {
                     </Link>
                 </div>
 
-                {/* Mobile Menu Button */}
-                <button
-                    className="md:hidden text-text-secondary hover:text-white"
-                    onClick={toggleMenu}
-                >
-                    {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                </button>
+                {/* Mobile Menu Button + Theme Toggle */}
+                <div className="md:hidden flex items-center gap-4">
+                    <button
+                        onClick={toggleTheme}
+                        className="text-text-secondary hover:text-text-primary focus:outline-none"
+                    >
+                        {theme === 'light' ? <Moon size={24} /> : <Sun size={24} />}
+                    </button>
+                    <button
+                        className="text-text-secondary hover:text-text-primary"
+                        onClick={toggleMenu}
+                    >
+                        {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                    </button>
+                </div>
             </div>
 
             {/* Mobile Menu */}
             {isMenuOpen && (
-                <div className="md:hidden bg-bg-primary border-b border-white/5 absolute top-20 left-0 right-0 p-6 flex flex-col gap-4 animate-in slide-in-from-top-4">
+                <div className="md:hidden bg-bg-primary border-b border-border-primary absolute top-20 left-0 right-0 p-6 flex flex-col gap-4 animate-in slide-in-from-top-4">
                     {navLinks.map((link) => (
                         <Link
                             key={link.label}
                             to={link.href}
-                            className="text-text-secondary hover:text-white font-medium text-lg py-2 block"
+                            className="text-text-secondary hover:text-text-primary font-medium text-lg py-2 block"
                             onClick={() => setIsMenuOpen(false)}
                         >
                             {link.label}
                         </Link>
                     ))}
-                    <div className="h-px bg-white/5 my-2" />
+                    <div className="h-px bg-text-secondary/10 my-2" />
                     <Link
                         to="/connexion"
-                        className="text-white font-medium text-lg py-2 block"
+                        className="text-text-primary font-medium text-lg py-2 block"
                         onClick={() => setIsMenuOpen(false)}
                     >
                         Se connecter

@@ -3,7 +3,7 @@ import { Eye, FileText, Upload, MessageSquare, AlertCircle, Clock, CheckCircle2 
 
 const DeliverableCard = ({ deliverable }) => {
     return (
-        <Card className="group border border-white/5 hover:border-white/10 transition-all">
+        <Card className="group border border-border-primary hover:border-text-secondary transition-all shadow-sm">
             <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
                 {/* Left Side: Status Icon & Info */}
                 <div className="flex gap-4">
@@ -30,7 +30,7 @@ const DeliverableCard = ({ deliverable }) => {
                             </Badge>
                         </div>
 
-                        <h3 className="text-xl font-bold text-white mb-2">
+                        <h3 className="text-xl font-bold text-text-primary mb-2">
                             {deliverable.title}
                         </h3>
 
@@ -54,11 +54,11 @@ const DeliverableCard = ({ deliverable }) => {
 
             {/* Feedback Section */}
             {deliverable.feedback && (
-                <div className="mt-6 bg-white/5 rounded-lg p-4 border-l-2 border-cyan">
+                <div className="mt-6 bg-text-secondary/5 rounded-lg p-4 border-l-2 border-cyan">
                     <div className="flex gap-3">
                         <MessageSquare size={18} className="text-cyan mt-0.5 shrink-0" />
                         <div>
-                            <p className="text-sm font-semibold text-white mb-1">Dernier feedback</p>
+                            <p className="text-sm font-semibold text-text-primary mb-1">Dernier feedback</p>
                             <p className="text-sm text-text-secondary leading-relaxed">
                                 {deliverable.feedback}
                             </p>
@@ -68,12 +68,12 @@ const DeliverableCard = ({ deliverable }) => {
             )}
 
             {/* Footer Actions */}
-            <div className="mt-6 pt-4 border-t border-white/5 flex gap-3">
-                <Button variant="ghost" size="sm" className="text-text-secondary hover:text-white">
+            <div className="mt-6 pt-4 border-t border-border-primary flex gap-3">
+                <Button variant="ghost" size="sm" className="text-text-secondary hover:text-text-primary">
                     <Eye size={16} className="mr-2" />
                     Voir le feedback
                 </Button>
-                <Button variant="ghost" size="sm" className="text-text-secondary hover:text-white">
+                <Button variant="ghost" size="sm" className="text-text-secondary hover:text-text-primary">
                     <FileText size={16} className="mr-2" />
                     Voir le livrable
                 </Button>

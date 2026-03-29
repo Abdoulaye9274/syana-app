@@ -43,7 +43,7 @@ const FaqPage = () => {
                             <HelpCircle size={16} />
                             Foire aux questions
                         </div>
-                        <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                        <h1 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
                             Questions fréquentes
                         </h1>
                         <p className="text-xl text-text-secondary">
@@ -56,8 +56,8 @@ const FaqPage = () => {
                     </div>
 
                     {/* CTA Section */}
-                    <div className="bg-gradient-to-br from-bg-card to-bg-card-hover border border-white/5 rounded-3xl p-12 text-center">
-                        <h2 className="text-2xl font-bold text-white mb-4">Vous avez encore des questions ?</h2>
+                    <div className="bg-gradient-to-br from-bg-card to-bg-card-hover border border-border-primary rounded-3xl p-12 text-center">
+                        <h2 className="text-2xl font-bold text-text-primary mb-4">Vous avez encore des questions ?</h2>
                         <p className="text-text-secondary mb-8">
                             Notre équipe est là pour vous répondre personnellement. Contactez-nous directement sur WhatsApp ou par email.
                         </p>
@@ -73,7 +73,7 @@ const FaqPage = () => {
                             </a>
                             <Link
                                 to="/contact"
-                                className="flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 py-3 rounded-button font-medium transition-all"
+                                className="flex items-center gap-2 bg-bg-card hover:bg-bg-card-hover text-text-primary border border-border-primary px-8 py-3 rounded-button font-medium transition-all"
                             >
                                 Page Contact
                             </Link>

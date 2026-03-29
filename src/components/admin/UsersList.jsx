@@ -66,9 +66,9 @@ const UsersList = () => {
     }
 
     return (
-        <Card className="border-white/5 bg-bg-card/50 backdrop-blur-sm overflow-hidden">
-            <div className="p-6 border-b border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <h2 className="text-xl font-bold text-white flex items-center gap-2">
+        <Card className="border-border-primary bg-bg-card/50 backdrop-blur-sm overflow-hidden">
+            <div className="p-6 border-b border-border-primary flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <h2 className="text-xl font-bold text-text-primary flex items-center gap-2">
                     <User className="text-cyan" size={24} />
                     Utilisateurs ({users.length})
                 </h2>
@@ -80,7 +80,7 @@ const UsersList = () => {
                         placeholder="Rechercher un email..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="bg-bg-primary/50 border border-white/10 rounded-lg pl-10 pr-4 py-2 text-sm text-white focus:outline-none focus:border-cyan w-full sm:w-64"
+                        className="bg-bg-primary/50 border border-border-primary rounded-lg pl-10 pr-4 py-2 text-sm text-text-primary focus:outline-none focus:border-cyan w-full sm:w-64"
                     />
                 </div>
             </div>
@@ -88,21 +88,21 @@ const UsersList = () => {
             <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                     <thead>
-                        <tr className="bg-white/5 text-text-secondary text-sm">
+                        <tr className="bg-bg-primary/50 text-text-secondary text-sm">
                             <th className="p-4 font-medium">Utilisateur</th>
                             <th className="p-4 font-medium">Date d'inscription</th>
                             <th className="p-4 font-medium">Plan Actuel</th>
                             <th className="p-4 font-medium">Action (Assigner Plan)</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/5">
+                    <tbody className="divide-y divide-border-primary">
                         {filteredUsers.map(user => (
-                            <tr key={user.id} className="hover:bg-white/5 transition-colors">
+                            <tr key={user.id} className="hover:bg-bg-card-hover transition-colors">
                                 <td className="p-4">
                                     <div className="flex flex-col">
-                                        <span className="text-white font-medium">{user.displayName || 'Sans nom'}</span>
+                                        <span className="text-text-primary font-medium">{user.displayName || 'Sans nom'}</span>
                                         <span className="text-text-secondary text-sm">{user.email}</span>
-                                        <span className="text-xs text-white/20 font-mono mt-1">{user.id}</span>
+                                        <span className="text-xs text-text-secondary/50 font-mono mt-1">{user.id}</span>
                                     </div>
                                 </td>
                                 <td className="p-4 text-text-secondary text-sm">
@@ -121,7 +121,7 @@ const UsersList = () => {
                                             disabled={updatingId === user.id}
                                             value={user.plan || 'free'}
                                             onChange={(e) => handlePlanChange(user.id, e.target.value)}
-                                            className="bg-bg-primary border border-white/10 rounded px-3 py-1.5 text-sm text-text-secondary focus:outline-none focus:border-cyan"
+                                            className="bg-bg-primary border border-border-primary rounded px-3 py-1.5 text-sm text-text-secondary focus:outline-none focus:border-cyan"
                                         >
                                             <option value="free">Gratuit</option>
                                             <option value="start">Start</option>

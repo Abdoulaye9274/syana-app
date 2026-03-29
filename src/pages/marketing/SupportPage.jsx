@@ -41,7 +41,7 @@ const SupportPage = () => {
                             <LifeBuoy size={16} />
                             Centre de Support
                         </div>
-                        <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                        <h1 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
                             Comment pouvons-nous vous aider ?
                         </h1>
                         <p className="text-xl text-text-secondary max-w-2xl mx-auto">
@@ -51,9 +51,9 @@ const SupportPage = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
                         {supportOptions.map((option, index) => (
-                            <Card key={index} className="p-8 hover:border-cyan/30 transition-all group">
+                            <Card key={index} className="p-8 hover:border-cyan/30 transition-all group border-border-primary">
                                 <div className="mb-6">{option.icon}</div>
-                                <h3 className="text-xl font-bold text-white mb-4">{option.title}</h3>
+                                <h3 className="text-xl font-bold text-text-primary mb-4">{option.title}</h3>
                                 <p className="text-text-secondary mb-8 leading-relaxed">
                                     {option.description}
                                 </p>
@@ -81,8 +81,8 @@ const SupportPage = () => {
                     </div>
 
                     {/* FAQ Preview */}
-                    <div className="bg-bg-card border border-white/5 rounded-3xl p-12 text-center">
-                        <h2 className="text-3xl font-bold text-white mb-6">Une question fréquente ?</h2>
+                    <div className="bg-bg-card border border-border-primary rounded-3xl p-12 text-center">
+                        <h2 className="text-3xl font-bold text-text-primary mb-6">Une question fréquente ?</h2>
                         <p className="text-text-secondary mb-8 max-w-xl mx-auto">
                             Consultez notre foire aux questions pour obtenir des réponses immédiates aux interrogations les plus courantes.
                         </p>
