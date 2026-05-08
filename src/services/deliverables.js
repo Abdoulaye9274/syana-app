@@ -120,6 +120,56 @@ export const getUserDeliverablesResult = async (userId) => {
 }
 
 /**
+ * (Admin) Upload un fichier de correction vers Firebase Storage
+ */
+export const uploadAdminCorrection = async (userId, moduleId, file) => {
+    try {
+        const timestamp = Date.now()
+        const fileName = `${timestamp}_${file.name}`
+        const filePath = `corrections/${userId}/${moduleId}/${fileName}`
+
+        const fileRef = ref(storage, filePath)
+        await uploadBytes(fileRef, file)
+        const downloadURL = await getDownloadURL(fileRef)
+
+        return {
+            url: downloadURL,
+            filename: file.name,
+            storagePath: filePath
+        }
+    } catch (error) {
+        console.error('Error uploading admin correction:', error)
+        throw error
+    }
+}
+
+/**
+ * (Admin) Sauvegarde la correction + statut sur le livrable d'un user
+ */
+export const saveAdminReview = async (userId, moduleId, { status, feedback, correction }) => {
+    try {
+        const docRef = doc(db, 'users', userId, 'deliverables', moduleId)
+        const updateData = {
+            status,
+            feedback: feedback || null,
+            reviewedAt: serverTimestamp(),
+            updatedAt: serverTimestamp()
+        }
+        if (correction) {
+            updateData.correction = {
+                url: correction.url,
+                filename: correction.filename,
+                uploadedAt: serverTimestamp()
+            }
+        }
+        await updateDoc(docRef, updateData)
+    } catch (error) {
+        console.error('Error saving admin review:', error)
+        throw error
+    }
+}
+
+/**
  * (Admin) Récupère les livrables en attente de validation
  * Note: Firestore ne permet pas facilement de requêter les sous-collections de tous les utilisateurs
  * sauf avec un "Collection Group Query".

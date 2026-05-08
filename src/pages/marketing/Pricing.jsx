@@ -96,7 +96,7 @@ const Pricing = () => {
                     <div className="text-center max-w-3xl mx-auto mb-16 relative z-10">
                         <span className="text-cyan tracking-wider uppercase text-sm font-bold mb-4 block">Tarification Globale</span>
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-text-primary mb-6">
-                            Investissez dans votre <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan to-violet">Exécution</span>
+                            Investissez dans votre <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan to-violet">exécution</span>
                         </h1>
                         <p className="text-lg text-text-secondary">
                             Choisissez la formule qui correspond à votre ambition. Tous les plans incluent l'accès à vie aux mises à jour.

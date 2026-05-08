@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft, ChevronRight, ChevronLeft, AlertCircle, Target, ListChecks, Lightbulb, AlertTriangle } from 'lucide-react'
+import { ArrowLeft, ChevronRight, ChevronLeft, AlertCircle, Target, ListChecks, Lightbulb, AlertTriangle, CheckCircle2, Clock } from 'lucide-react'
 import { Button, Badge, Loading } from '@/components/ui'
 import VideoPlayer from '@/components/modules/VideoPlayer'
 import ResourceList from '@/components/modules/ResourceList'
@@ -15,6 +15,8 @@ const ModuleDetail = () => {
         module,
         loading,
         activeLessonIndex,
+        lessonsCompleted,
+        markLessonComplete,
         setLesson,
         goToNextModule,
         goToPreviousModule
@@ -214,9 +216,24 @@ const ModuleDetail = () => {
                                             <ValidationChecklist
                                                 moduleId={id}
                                                 moduleOrder={module?.order || 1}
-                                                items={module.checklist}
+                                                totalLessons={module?.lessons?.length || 0}
+                                                lessonsCompleted={lessonsCompleted}
                                                 onValidated={handleModuleValidated}
                                             />
+
+                                            {/* Mark current lesson as done */}
+                                            {!lessonsCompleted.includes(`lesson_${activeLessonIndex}`) && (
+                                                <div className="flex justify-end pt-4">
+                                                    <Button
+                                                        variant="secondary"
+                                                        onClick={() => markLessonComplete(activeLessonIndex)}
+                                                        className="border-green-500/30 text-green-500 hover:bg-green-500/10"
+                                                    >
+                                                        <CheckCircle2 size={16} className="mr-2" />
+                                                        Marquer cette leçon comme terminée
+                                                    </Button>
+                                                </div>
+                                            )}
 
                                             {/* Navigation Modules Row */}
                                             <div className="grid grid-cols-2 gap-4 pt-10 border-t border-border-primary">
@@ -232,6 +249,7 @@ const ModuleDetail = () => {
                                                 <Button
                                                     variant="secondary"
                                                     onClick={goToNextModule}
+                                                    disabled={module?.order >= 14}
                                                     className="h-14 font-bold border-border-primary"
                                                 >
                                                     Suivant
@@ -267,6 +285,7 @@ const ModuleDetail = () => {
                         <LessonList
                             lessons={module.lessons || []}
                             activeLessonIndex={activeLessonIndex}
+                            lessonsCompleted={lessonsCompleted}
                             onLessonSelect={setLesson}
                         />
                     </div>

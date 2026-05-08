@@ -5,7 +5,6 @@ export const pricingPlans = [
         price: '97',
         interval: 'mois',
         subtitle: 'Autonomie',
-        tva: 'TVA non-applicable, art. 293 B du CGI',
         description: 'Pour commencer à structurer son business de manière autonome et solide.',
         features: [
             'Accès à la plateforme en illimité',
@@ -26,7 +25,6 @@ export const pricingPlans = [
         price: '197',
         interval: 'mois',
         subtitle: 'Boost & accompagnement',
-        tva: 'TVA non-applicable, art. 293 B du CGI',
         description: 'Pour ceux qui veulent un suivi personnalisé et booster leur passage à l\'action.',
         features: [
             'Tout le contenu du Pack Basic',
@@ -49,7 +47,6 @@ export const pricingPlans = [
         price: '397',
         interval: 'mois',
         subtitle: 'Accompagnement sur-mesure',
-        tva: 'TVA non-applicable, art. 293 B du CGI',
         description: 'Pour avoir un accompagnement individuel, ultra-personnalisé avec des objectifs clairs.',
         features: [
             'Tout le contenu du Pack Medium',

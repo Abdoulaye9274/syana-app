@@ -32,7 +32,7 @@ const Register = () => {
             return
         }
         if (!validatePassword(password)) {
-            setError("Le mot de passe doit faire au moins 6 caractères.")
+            setError("Le mot de passe doit faire au moins 8 caractères.")
             return
         }
 
@@ -61,7 +61,7 @@ const Register = () => {
             if (err.code === 'auth/email-already-in-use') {
                 setError("Cet email est déjà utilisé.")
             } else if (err.code === 'auth/weak-password') {
-                setError("Le mot de passe doit faire au moins 6 caractères.")
+                setError("Le mot de passe doit faire au moins 8 caractères.")
             } else {
                 setError("Une erreur est survenue lors de l'inscription.")
             }
@@ -126,7 +126,7 @@ const Register = () => {
                             variant="secondary"
                             onClick={handleGoogleRegister}
                             disabled={isLoading}
-                            className="w-full flex items-center justify-center gap-2 mb-6 !bg-white !text-black hover:!bg-gray-200 !border-transparent shadow shadow-white/10"
+                            className="w-full flex items-center justify-center gap-2 mb-6 bg-white text-gray-800 border-transparent hover:bg-gray-100 shadow shadow-white/10 font-medium"
                         >
                             <svg className="w-5 h-5" viewBox="0 0 24 24">
                                 <path
@@ -158,19 +158,19 @@ const Register = () => {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <Input
                                 label="Prénom"
                                 placeholder="Julie"
                                 value={firstName}
-                                onChange={(e) => setFirstName(e.target.value)}
+                                onChange={(e) => { setError(''); setFirstName(e.target.value) }}
                                 required
                             />
                             <Input
                                 label="Nom"
                                 placeholder="Martin"
                                 value={lastName}
-                                onChange={(e) => setLastName(e.target.value)}
+                                onChange={(e) => { setError(''); setLastName(e.target.value) }}
                                 required
                             />
                         </div>
@@ -180,7 +180,7 @@ const Register = () => {
                             type="email"
                             placeholder="votre@email.com"
                             value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={(e) => { setError(''); setEmail(e.target.value) }}
                             required
                         />
 
@@ -191,7 +191,7 @@ const Register = () => {
                                 showToggle
                                 placeholder="••••••••"
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                onChange={(e) => { setError(''); setPassword(e.target.value) }}
                                 required
                             />
                             <p className="mt-1 text-xs text-text-secondary">
@@ -207,7 +207,10 @@ const Register = () => {
                                 required
                             />
                             <label htmlFor="cgu" className="ml-2 block text-sm text-text-secondary">
-                                J'accepte les <Link to="/cgu" className="text-text-primary hover:underline">Conditions Générales d'Utilisation</Link> et la <Link to="/confidentialite" className="text-text-primary hover:underline">Politique de Confidentialité</Link>.
+                                J'accepte les{' '}
+                                <a href="/cgu" target="_blank" rel="noopener noreferrer" className="text-text-primary hover:underline">Conditions Générales d'Utilisation</a>
+                                {' '}et la{' '}
+                                <a href="/confidentialite" target="_blank" rel="noopener noreferrer" className="text-text-primary hover:underline">Politique de Confidentialité</a>.
                             </label>
                         </div>
 

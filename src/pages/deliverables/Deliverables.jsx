@@ -8,21 +8,30 @@ import {
     AlertCircle,
     Send,
     MessageSquare,
-    Eye,
     UploadCloud,
     RefreshCw,
-    Loader2
+    Loader2,
+    Download,
+    Search
 } from 'lucide-react'
 import { useDeliverables } from '@/hooks/useDeliverables'
+import { SkeletonDeliverableCard, SkeletonStatCard } from '@/components/ui'
 import { toast } from 'react-hot-toast'
+
+const statColorClasses = {
+    blue: 'text-blue-500',
+    green: 'text-green-500',
+    cyan: 'text-cyan',
+    orange: 'text-orange-500'
+}
 
 const DeliverableStatCard = ({ label, value, color }) => (
     <Card className="flex flex-col justify-between h-32 relative overflow-hidden group">
-        <div className={`absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity text-text-primary`}>
+        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity text-text-primary">
             <FileText size={48} />
         </div>
         <span className="text-text-secondary font-medium text-sm">{label}</span>
-        <span className={`text-4xl font-bold text-${color}-500`}>{value}</span>
+        <span className={`text-4xl font-bold ${statColorClasses[color] || 'text-text-primary'}`}>{value}</span>
     </Card>
 )
 
@@ -40,6 +49,7 @@ const Deliverables = () => {
 
     const [inputs, setInputs] = useState({})
     const [filter, setFilter] = useState('all')
+    const [searchQuery, setSearchQuery] = useState('')
     const fileInputRefs = useRef({})
 
     const handleSubmit = async (moduleId) => {
@@ -72,13 +82,21 @@ const Deliverables = () => {
     }
 
     if (loading) return (
-        <DashboardLayout title="Mes Livrables">
-            <div className="flex justify-center p-12"><Loading /></div>
+        <DashboardLayout title="Mes livrables & feedbacks" subtitle="Suivez vos soumissions et les retours de l'équipe">
+            <div className="space-y-8">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    {[...Array(4)].map((_, i) => <SkeletonStatCard key={i} />)}
+                </div>
+                <div className="space-y-4">
+                    {[...Array(3)].map((_, i) => <SkeletonDeliverableCard key={i} />)}
+                </div>
+            </div>
         </DashboardLayout>
     )
 
     const filteredModules = modules.filter(module => {
         const d = deliverables[module.id]
+        if (searchQuery && !module.title.toLowerCase().includes(searchQuery.toLowerCase())) return false
         if (filter === 'all') return true
         if (filter === 'none') return !d
         return d?.status === filter
@@ -98,8 +116,19 @@ const Deliverables = () => {
                     <DeliverableStatCard label="À retravailler" value={stats.rejected} color="orange" />
                 </div>
 
-                {/* 2. Filters Row */}
-                <div className="flex flex-wrap items-center gap-4 text-sm">
+                {/* 2. Search + Filters Row */}
+                <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
+                    <div className="relative w-full md:w-80">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" size={16} />
+                        <input
+                            type="text"
+                            placeholder="Rechercher un module..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="w-full bg-bg-card border border-border-primary rounded-xl py-2.5 pl-9 pr-4 text-sm text-text-primary focus:outline-none focus:border-cyan/50 focus:ring-1 focus:ring-cyan/50 transition-all placeholder:text-text-secondary"
+                        />
+                    </div>
+                    <div className="flex flex-wrap items-center gap-4 text-sm">
                     <span className="font-medium text-text-primary">Filtrer par :</span>
                     <div className="flex gap-2">
                         {[
@@ -121,6 +150,7 @@ const Deliverables = () => {
                             </button>
                         ))}
                     </div>
+                </div>
                 </div>
 
                 {/* 3. Deliverables List */}
@@ -184,11 +214,35 @@ const Deliverables = () => {
                                                 <div className="bg-bg-card-hover rounded-xl p-4 border border-border-primary flex gap-3">
                                                     <MessageSquare className="text-text-secondary shrink-0 mt-1" size={18} />
                                                     <div>
-                                                        <h4 className="text-sm font-bold text-text-primary mb-1">Dernier feedback</h4>
+                                                        <h4 className="text-sm font-bold text-text-primary mb-1">Feedback du formateur</h4>
                                                         <p className="text-sm text-text-secondary leading-relaxed">
                                                             {deliverable.feedback}
                                                         </p>
                                                     </div>
+                                                </div>
+                                            )}
+
+                                            {deliverable?.correction?.url && (
+                                                <div className="bg-cyan/5 border border-cyan/20 rounded-xl p-4 flex items-center gap-4">
+                                                    <div className="w-10 h-10 rounded-xl bg-cyan/10 flex items-center justify-center shrink-0">
+                                                        <FileText size={20} className="text-cyan" />
+                                                    </div>
+                                                    <div className="flex-1 min-w-0">
+                                                        <h4 className="text-sm font-bold text-text-primary mb-0.5">Correction disponible</h4>
+                                                        <p className="text-xs text-text-secondary truncate">
+                                                            {deliverable.correction.filename}
+                                                        </p>
+                                                    </div>
+                                                    <a
+                                                        href={deliverable.correction.url}
+                                                        target="_blank"
+                                                        rel="noreferrer"
+                                                        download
+                                                        className="flex items-center gap-2 px-4 py-2 bg-cyan text-black text-sm font-bold rounded-lg hover:bg-cyan/90 transition-colors shrink-0"
+                                                    >
+                                                        <Download size={15} />
+                                                        Télécharger
+                                                    </a>
                                                 </div>
                                             )}
 

@@ -9,7 +9,7 @@ const Button = forwardRef(({
     className = '',
     ...props
 }, ref) => {
-    const baseStyles = 'inline-flex items-center justify-center font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed'
+    const baseStyles = 'inline-flex items-center justify-center font-semibold transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-bg-primary'
 
     const variants = {
         primary: 'bg-gradient-primary text-white hover:shadow-glow-cyan hover:-translate-y-0.5',

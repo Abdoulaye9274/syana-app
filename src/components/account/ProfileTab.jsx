@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Card, Input, Button } from '@/components/ui'
+import { Card, Input, Button, SkeletonProfileCard } from '@/components/ui'
 import { useAuth } from '@/context/AuthContext'
 import { doc, updateDoc } from 'firebase/firestore'
 import { db } from '@/services/firebase/config'
@@ -53,6 +53,8 @@ const ProfileTab = () => {
             setLoading(false)
         }
     }
+
+    if (!userProfile) return <SkeletonProfileCard />
 
     return (
         <Card>

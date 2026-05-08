@@ -1,7 +1,6 @@
 import { CheckCircle2, Play, Lock } from 'lucide-react'
 
-const LessonList = ({ lessons = [], activeLessonIndex = 0, onLessonSelect }) => {
-    // Calculate total duration (mock logic as example, real would parse 'X min')
+const LessonList = ({ lessons = [], activeLessonIndex = 0, lessonsCompleted = [], onLessonSelect }) => {
     const totalLessons = lessons.length
 
     return (
@@ -15,7 +14,7 @@ const LessonList = ({ lessons = [], activeLessonIndex = 0, onLessonSelect }) => 
                 <div className="mt-4 h-1 bg-border-primary rounded-full overflow-hidden">
                     <div
                         className="h-full bg-gradient-primary rounded-full transition-all duration-500"
-                        style={{ width: `${((activeLessonIndex) / totalLessons) * 100}%` }}
+                        style={{ width: `${(lessonsCompleted.length / totalLessons) * 100}%` }}
                     />
                 </div>
             </div>
@@ -23,7 +22,7 @@ const LessonList = ({ lessons = [], activeLessonIndex = 0, onLessonSelect }) => 
             <div className="flex-1 overflow-y-auto custom-scrollbar">
                 {lessons.map((lesson, index) => {
                     const isActive = index === activeLessonIndex
-                    const isCompleted = false // TODO: Real completion logic
+                    const isCompleted = lessonsCompleted.includes(`lesson_${index}`)
 
                     return (
                         <div

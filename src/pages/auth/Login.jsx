@@ -135,7 +135,7 @@ const Login = () => {
                             variant="secondary"
                             onClick={handleGoogleLogin}
                             disabled={isLoading}
-                            className="w-full flex items-center justify-center gap-2 mb-6 !bg-white !text-black hover:!bg-gray-200 !border-transparent shadow shadow-white/10"
+                            className="w-full flex items-center justify-center gap-2 mb-6 bg-white text-gray-800 border-transparent hover:bg-gray-100 shadow shadow-white/10 font-medium"
                         >
                             <svg className="w-5 h-5" viewBox="0 0 24 24">
                                 <path
@@ -172,7 +172,7 @@ const Login = () => {
                             type="email"
                             placeholder="votre@email.com"
                             value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={(e) => { setError(''); setEmail(e.target.value) }}
                             required
                         />
 
@@ -183,7 +183,7 @@ const Login = () => {
                                 showToggle
                                 placeholder="••••••••"
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                onChange={(e) => { setError(''); setPassword(e.target.value) }}
                                 required
                             />
                             <div className="flex justify-end mt-2">

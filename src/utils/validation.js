@@ -11,10 +11,10 @@ export const validateEmail = (email) => {
 }
 
 /**
- * Validates a password (min 6 characters)
+ * Validates a password (min 8 characters)
  */
 export const validatePassword = (password) => {
-    return password && password.length >= 6
+    return password && password.length >= 8
 }
 
 /**

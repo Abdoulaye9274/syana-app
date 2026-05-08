@@ -162,23 +162,22 @@ export const validateModule = async (userId, moduleId, moduleOrder) => {
         const progressRef = doc(db, 'users', userId, 'progress', moduleId)
         const userRef = doc(db, 'users', userId)
 
-        // Marquer le module comme complété
-        await updateDoc(progressRef, {
+        // Créer ou mettre à jour le document de progression (setDoc avec merge pour éviter l'erreur si inexistant)
+        await setDoc(progressRef, {
+            moduleId,
+            moduleOrder,
             completed: true,
             progress: 100,
             validatedAt: serverTimestamp(),
             updatedAt: serverTimestamp()
-        })
+        }, { merge: true })
 
         // Mettre à jour le currentModule de l'utilisateur pour débloquer le suivant
         const nextModule = moduleOrder + 1
-        await updateDoc(userRef, {
+        await setDoc(userRef, {
             currentModule: nextModule,
             updatedAt: serverTimestamp()
-        })
-
-        // Calculer la progression globale (si on l'a déjà récupéré avant)
-        // await calculateGlobalProgress(userId)
+        }, { merge: true })
 
         return nextModule
     } catch (error) {

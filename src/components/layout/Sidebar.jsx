@@ -1,10 +1,11 @@
 import { Link, useLocation } from 'react-router-dom'
-import { LayoutDashboard, Layers, FileText, User, LogOut } from 'lucide-react'
+import { LayoutDashboard, Layers, FileText, User, LogOut, X } from 'lucide-react'
 import { Button } from '@/components/ui'
 import { useAuth } from '@/context/AuthContext'
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen = false, onClose }) => {
     const location = useLocation()
+    const { user, userProfile, logout } = useAuth()
 
     const navigation = [
         { name: 'Mon parcours', href: '/tableau-de-bord', icon: LayoutDashboard },
@@ -15,9 +16,6 @@ const Sidebar = () => {
 
     const isActive = (path) => location.pathname === path
 
-    const { user, userProfile, logout } = useAuth()
-
-    // Fallback initials if no profile
     const getInitials = () => {
         if (userProfile?.firstName && userProfile?.lastName) {
             return `${userProfile.firstName[0]}${userProfile.lastName[0]}`.toUpperCase()
@@ -30,16 +28,23 @@ const Sidebar = () => {
         : user?.displayName || 'Utilisateur'
 
     return (
-        <div className="fixed left-0 top-0 h-full w-[280px] bg-bg-secondary border-r border-border-primary flex flex-col p-6 z-40 transition-colors duration-300">
-            {/* Logo */}
-            <div className="mb-10 px-2">
-                <Link to="/" className="block">
-                    <img
-                        src="/logo.png"
-                        alt="SYANA Logo"
-                        className="h-12 w-auto object-contain"
-                    />
+        <div className={`
+            fixed left-0 top-0 h-full w-[280px] bg-bg-secondary border-r border-border-primary
+            flex flex-col p-6 z-40 transition-transform duration-300 ease-in-out
+            ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+        `}>
+            {/* Logo + close mobile */}
+            <div className="mb-10 px-2 flex items-center justify-between">
+                <Link to="/" className="block" onClick={onClose}>
+                    <img src="/logo.png" alt="SYANA Logo" className="h-12 w-auto object-contain" />
                 </Link>
+                <button
+                    onClick={onClose}
+                    className="md:hidden w-8 h-8 flex items-center justify-center rounded-lg text-text-secondary hover:text-text-primary hover:bg-bg-card-hover transition-colors"
+                    aria-label="Fermer le menu"
+                >
+                    <X size={18} />
+                </button>
             </div>
 
             {/* Navigation */}
@@ -47,22 +52,22 @@ const Sidebar = () => {
                 {navigation.map((item) => {
                     const active = isActive(item.href)
                     const Icon = item.icon
-
                     return (
                         <Link
                             key={item.name}
                             to={item.href}
+                            onClick={onClose}
                             className={`
-                flex items-center gap-3 px-4 py-3 rounded-button transition-all duration-300 group
-                ${active
+                                flex items-center gap-3 px-4 py-3 rounded-button transition-all duration-200 group
+                                ${active
                                     ? 'bg-cyan/10 text-cyan'
                                     : 'text-text-secondary hover:text-text-primary hover:bg-bg-card-hover'
                                 }
-              `}
+                            `}
                         >
                             <Icon
                                 size={20}
-                                className={`transition-colors duration-300 ${active ? 'text-cyan' : 'text-text-secondary group-hover:text-text-primary'}`}
+                                className={`transition-colors duration-200 ${active ? 'text-cyan' : 'text-text-secondary group-hover:text-text-primary'}`}
                             />
                             <span className="font-medium text-sm">{item.name}</span>
                         </Link>
@@ -72,17 +77,19 @@ const Sidebar = () => {
 
             {/* User Profile & Logout */}
             <div className="pt-6 border-t border-border-primary">
-                <Link to="/compte" className="bg-bg-card rounded-card p-4 mb-4 flex items-center gap-3 border border-border-primary hover:bg-bg-card-hover transition-colors cursor-pointer group">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan to-violet flex items-center justify-center text-white font-bold text-sm group-hover:scale-105 transition-transform">
+                <Link
+                    to="/compte"
+                    onClick={onClose}
+                    className="bg-bg-card rounded-card p-4 mb-4 flex items-center gap-3 border border-border-primary hover:bg-bg-card-hover transition-colors cursor-pointer group"
+                >
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan to-violet flex items-center justify-center text-white font-bold text-sm shrink-0 group-hover:scale-105 transition-transform">
                         {getInitials()}
                     </div>
                     <div className="flex-1 min-w-0">
                         <p className="text-sm font-semibold text-text-primary truncate group-hover:text-cyan transition-colors">
                             {displayName}
                         </p>
-                        <p className="text-xs text-text-secondary truncate">
-                            {user?.email}
-                        </p>
+                        <p className="text-xs text-text-secondary truncate">{user?.email}</p>
                     </div>
                 </Link>
 

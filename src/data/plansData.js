@@ -42,7 +42,7 @@ export const plansData = [
             'Coaching individuel (2h/mois)',
             'Audit complet de votre business'
         ],
-        gradient: 'from-amber-400 to-orange-500',
+        gradient: 'from-violet-600 to-rose-500',
         stripeLink: 'https://buy.stripe.com/test_...'
     }
 ]

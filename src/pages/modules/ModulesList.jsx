@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { DashboardLayout } from '@/components/layout'
 import ModuleCard from '@/components/modules/ModuleCard'
 import { Card, Loading } from '@/components/ui'
@@ -8,7 +9,13 @@ import { useModulesList } from '@/hooks/useModulesList'
 const ModulesList = () => {
     const { modules, loading, error } = useModulesList()
     const [filter, setFilter] = useState('all')
-    const [searchQuery, setSearchQuery] = useState('')
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '')
+
+    useEffect(() => {
+        const q = searchParams.get('q')
+        if (q) setSearchQuery(q)
+    }, [searchParams])
 
     if (loading) return (
         <DashboardLayout title="Tous les modules">

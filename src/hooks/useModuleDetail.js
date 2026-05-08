@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/context/AuthContext'
 import { getModuleById, getModuleByOrder } from '@/services/modules'
-import { getModuleProgress } from '@/services/progress'
+import { getModuleProgress, updateLessonProgress, calculateGlobalProgress } from '@/services/progress'
 
 /**
  * Hook pour gérer les détails et la navigation d'un module
@@ -13,6 +13,7 @@ export const useModuleDetail = (moduleId) => {
     const [module, setModule] = useState(null)
     const [loading, setLoading] = useState(true)
     const [activeLessonIndex, setActiveLessonIndex] = useState(0)
+    const [lessonsCompleted, setLessonsCompleted] = useState([])
 
     const fetchData = useCallback(async () => {
         if (!moduleId) return
@@ -27,10 +28,15 @@ export const useModuleDetail = (moduleId) => {
 
             if (user) {
                 const progressData = await getModuleProgress(user.uid, moduleId)
-                if (progressData && progressData.lessonsCompleted) {
-                    // Si on a des leçons complétées, on se place sur la suivante ou la dernière
-                    const completedCount = progressData.lessonsCompleted.length
-                    setActiveLessonIndex(Math.min(completedCount, (mod.lessons?.length || 1) - 1))
+                if (progressData) {
+                    if (progressData.lessonsCompleted) {
+                        setLessonsCompleted(progressData.lessonsCompleted)
+                        // Si on a des leçons complétées, on se place sur la suivante ou la dernière
+                        const completedCount = progressData.lessonsCompleted.length
+                        setActiveLessonIndex(Math.min(completedCount, (mod.lessons?.length || 1) - 1))
+                    }
+                } else {
+                    setLessonsCompleted([])
                 }
             }
         } catch (error) {
@@ -70,10 +76,25 @@ export const useModuleDetail = (moduleId) => {
         }
     }
 
+    const markLessonComplete = async (index) => {
+        if (!user || !moduleId) return
+
+        const lessonId = `lesson_${index}`
+        try {
+            const updatedLessons = await updateLessonProgress(user.uid, moduleId, lessonId, true)
+            setLessonsCompleted(updatedLessons)
+            await calculateGlobalProgress(user.uid, 14)
+        } catch (error) {
+            console.error("Error marking lesson complete:", error)
+        }
+    }
+
     return {
         module,
         loading,
         activeLessonIndex,
+        lessonsCompleted,
+        markLessonComplete,
         setLesson,
         goToNextModule,
         goToPreviousModule,

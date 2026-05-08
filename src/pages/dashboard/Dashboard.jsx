@@ -9,7 +9,7 @@ import {
 } from '@/components/dashboard'
 import { Layers, Clock, TrendingUp } from 'lucide-react'
 import { useDashboardData } from '@/hooks/useDashboardData'
-import { Loading } from '@/components/ui'
+import { Loading, SkeletonStatCard, SkeletonModuleCard } from '@/components/ui'
 
 const Dashboard = () => {
     const {
@@ -23,12 +23,22 @@ const Dashboard = () => {
 
     if (loading) {
         return (
-            <DashboardLayout
-                title="Bonjour 👋"
-                subtitle="Chargement de votre tableau de bord..."
-            >
-                <div className="flex items-center justify-center min-h-[400px]">
-                    <Loading size="lg" />
+            <DashboardLayout title="Bonjour 👋" subtitle="Chargement...">
+                <div className="space-y-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <SkeletonStatCard />
+                        <SkeletonStatCard />
+                        <SkeletonStatCard />
+                    </div>
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div className="lg:col-span-2 space-y-8">
+                            <SkeletonModuleCard />
+                        </div>
+                        <div className="space-y-4">
+                            <SkeletonStatCard />
+                            <SkeletonStatCard />
+                        </div>
+                    </div>
                 </div>
             </DashboardLayout>
         )
