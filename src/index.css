@@ -4,15 +4,16 @@
 
 /* Theme Variables */
 :root {
-    --bg-primary: #F8FAFC;
-    --bg-secondary: #FFFFFF;
+    /* Mode clair — épuré, contrasté, professionnel */
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #F4F6FA;
     --bg-card: #FFFFFF;
-    --bg-card-hover: #EEF2F7;
-    --text-primary: #1E293B;
-    --text-secondary: #475569;
-    --border-primary: rgba(0, 0, 0, 0.05);
-    --glass-bg: rgba(255, 255, 255, 0.7);
-    --glass-border: rgba(0, 0, 0, 0.05);
+    --bg-card-hover: #EBF0F9;
+    --text-primary: #0F172A;
+    --text-secondary: #64748B;
+    --border-primary: rgba(15, 23, 42, 0.10);
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(15, 23, 42, 0.08);
 }
 
 .dark {
@@ -28,6 +29,16 @@
 }
 
 @layer base {
+    html {
+        font-size: 14.5px;
+    }
+
+    @media (max-width: 768px) {
+        html {
+            font-size: 14px;
+        }
+    }
+
     body {
         @apply bg-bg-primary text-text-primary font-sans antialiased transition-colors duration-300;
     }
@@ -123,4 +134,24 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+}
+
+/* ── Mode clair : overrides marketing ────────────────────────────────── */
+:root:not(.dark) body {
+    background: #FFFFFF;
+}
+
+/* Cards en mode clair : ombre douce au lieu de border presque invisible */
+:root:not(.dark) .bg-bg-card {
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06), 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+/* Texte secondaire plus lisible */
+:root:not(.dark) .text-text-secondary {
+    color: #475569;
+}
+
+/* Boutons primary : assurer le blanc du texte */
+:root:not(.dark) .bg-gradient-primary {
+    color: #FFFFFF;
 }

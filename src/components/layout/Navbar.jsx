@@ -1,14 +1,23 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Button } from '@/components/ui'
 import { Menu, X, Sun, Moon } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTheme } from '@/context/ThemeContext'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const [scrolled, setScrolled] = useState(false)
     const { theme, toggleTheme } = useTheme()
+    const location = useLocation()
 
-    const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+    useEffect(() => {
+        const handleScroll = () => setScrolled(window.scrollY > 40)
+        window.addEventListener('scroll', handleScroll, { passive: true })
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [])
+
+    useEffect(() => { setIsMenuOpen(false) }, [location])
 
     const navLinks = [
         { label: 'Le Système', href: '/systeme' },
@@ -18,31 +27,34 @@ const Navbar = () => {
     ]
 
     return (
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-bg-primary/80 backdrop-blur-md border-b border-border-primary">
+        <motion.nav
+            initial={{ y: -80, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+                scrolled
+                    ? 'bg-bg-primary/90 backdrop-blur-xl border-b border-border-primary shadow-lg shadow-black/5'
+                    : 'bg-transparent border-b border-transparent'
+            }`}
+        >
             <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-                {/* Logo */}
                 <Link to="/" className="flex items-center gap-3">
-                    <img
-                        src="/logo.png"
-                        alt="SYANA Logo"
-                        className="h-10 w-auto object-contain"
-                    />
+                    <img src="/logo.png" alt="SYANA Logo" className="h-10 w-auto object-contain" />
                 </Link>
 
-                {/* Desktop Links */}
                 <div className="hidden md:flex items-center gap-8">
                     {navLinks.map((link) => (
                         <Link
                             key={link.label}
                             to={link.href}
-                            className="text-text-secondary hover:text-text-primary font-medium transition-colors text-sm"
+                            className="text-text-secondary hover:text-text-primary font-medium transition-colors text-sm relative group"
                         >
                             {link.label}
+                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-cyan transition-all duration-300 group-hover:w-full rounded-full" />
                         </Link>
                     ))}
                 </div>
 
-                {/* Desktop CTA */}
                 <div className="hidden md:flex items-center gap-4">
                     <button
                         onClick={toggleTheme}
@@ -55,58 +67,73 @@ const Navbar = () => {
                         Se connecter
                     </Link>
                     <Link to="/inscription">
-                        <Button size="sm" className="shadow-none">
+                        <Button size="sm" className="rounded-full">
                             Commencer l'essai
                         </Button>
                     </Link>
                 </div>
 
-                {/* Mobile Menu Button + Theme Toggle */}
                 <div className="md:hidden flex items-center gap-4">
-                    <button
-                        onClick={toggleTheme}
-                        className="text-text-secondary hover:text-text-primary focus:outline-none"
-                    >
-                        {theme === 'light' ? <Moon size={24} /> : <Sun size={24} />}
+                    <button onClick={toggleTheme} className="text-text-secondary hover:text-text-primary focus:outline-none">
+                        {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
                     </button>
                     <button
                         className="text-text-secondary hover:text-text-primary"
-                        onClick={toggleMenu}
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
                     >
-                        {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                        <AnimatePresence mode="wait" initial={false}>
+                            <motion.span
+                                key={isMenuOpen ? 'close' : 'open'}
+                                initial={{ rotate: -90, opacity: 0 }}
+                                animate={{ rotate: 0, opacity: 1 }}
+                                exit={{ rotate: 90, opacity: 0 }}
+                                transition={{ duration: 0.15 }}
+                                className="block"
+                            >
+                                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                            </motion.span>
+                        </AnimatePresence>
                     </button>
                 </div>
             </div>
 
-            {/* Mobile Menu */}
-            {isMenuOpen && (
-                <div className="md:hidden bg-bg-primary border-b border-border-primary absolute top-20 left-0 right-0 p-6 flex flex-col gap-4 animate-in slide-in-from-top-4">
-                    {navLinks.map((link) => (
-                        <Link
-                            key={link.label}
-                            to={link.href}
-                            className="text-text-secondary hover:text-text-primary font-medium text-lg py-2 block"
-                            onClick={() => setIsMenuOpen(false)}
-                        >
-                            {link.label}
-                        </Link>
-                    ))}
-                    <div className="h-px bg-text-secondary/10 my-2" />
-                    <Link
-                        to="/connexion"
-                        className="text-text-primary font-medium text-lg py-2 block"
-                        onClick={() => setIsMenuOpen(false)}
+            <AnimatePresence>
+                {isMenuOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                        className="md:hidden bg-bg-primary/95 backdrop-blur-xl border-b border-border-primary overflow-hidden"
                     >
-                        Se connecter
-                    </Link>
-                    <Link to="/inscription" onClick={() => setIsMenuOpen(false)}>
-                        <Button className="w-full">
-                            Commencer l'essai
-                        </Button>
-                    </Link>
-                </div>
-            )}
-        </nav>
+                        <div className="px-6 py-6 flex flex-col gap-2">
+                            {navLinks.map((link, i) => (
+                                <motion.div
+                                    key={link.label}
+                                    initial={{ opacity: 0, x: -16 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: i * 0.05, duration: 0.25 }}
+                                >
+                                    <Link
+                                        to={link.href}
+                                        className="text-text-secondary hover:text-text-primary font-medium text-lg py-3 block"
+                                    >
+                                        {link.label}
+                                    </Link>
+                                </motion.div>
+                            ))}
+                            <div className="h-px bg-border-primary my-2" />
+                            <Link to="/connexion" className="text-text-primary font-medium text-lg py-3 block">
+                                Se connecter
+                            </Link>
+                            <Link to="/inscription">
+                                <Button className="w-full rounded-full mt-2">Commencer l'essai</Button>
+                            </Link>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </motion.nav>
     )
 }
 

@@ -2,6 +2,8 @@ import { Mail, Phone, MapPin, Send } from 'lucide-react'
 import { Button, Input, Card } from '@/components/ui'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
+import { motion } from 'framer-motion'
+import { fadeUp, fadeLeft, fadeRight, stagger } from '@/utils/animations'
 
 const ContactPage = () => {
     return (
@@ -10,18 +12,29 @@ const ContactPage = () => {
 
             <main className="pt-32 pb-20 px-6">
                 <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-16">
-                        <h1 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
+                    <motion.div
+                        variants={stagger}
+                        initial="hidden"
+                        animate="visible"
+                        className="text-center mb-16"
+                    >
+                        <motion.h1 variants={fadeUp} className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
                             Contactez-nous
-                        </h1>
-                        <p className="text-xl text-text-secondary max-w-2xl mx-auto">
+                        </motion.h1>
+                        <motion.p variants={fadeUp} className="text-xl text-text-secondary max-w-2xl mx-auto">
                             Une question, un retour ou un besoin spécifique ? Notre équipe est à votre écoute pour vous accompagner.
-                        </p>
-                    </div>
+                        </motion.p>
+                    </motion.div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                         {/* Contact Info */}
-                        <div className="space-y-8">
+                        <motion.div
+                            variants={fadeLeft}
+                            initial="hidden"
+                            animate="visible"
+                            transition={{ delay: 0.2 }}
+                            className="space-y-8"
+                        >
                             <Card className="p-8">
                                 <h2 className="text-2xl font-bold text-text-primary mb-8">Informations de contact</h2>
 
@@ -56,9 +69,7 @@ const ContactPage = () => {
                                         </div>
                                         <div>
                                             <p className="text-sm text-text-secondary mb-1">Localisation</p>
-                                            <p className="text-lg text-text-primary">
-                                                France / International
-                                            </p>
+                                            <p className="text-lg text-text-primary">France / International</p>
                                         </div>
                                     </div>
                                 </div>
@@ -76,43 +87,50 @@ const ContactPage = () => {
                                     Ouvrir WhatsApp
                                 </Button>
                             </Card>
-                        </div>
+                        </motion.div>
 
                         {/* Contact Form */}
-                        <Card className="p-8">
-                            <h2 className="text-2xl font-bold text-text-primary mb-8">Envoyez-nous un message</h2>
-                            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className="space-y-2">
-                                        <label className="text-sm font-medium text-text-secondary">Prénom</label>
-                                        <Input placeholder="Votre prénom" />
+                        <motion.div
+                            variants={fadeRight}
+                            initial="hidden"
+                            animate="visible"
+                            transition={{ delay: 0.3 }}
+                        >
+                            <Card className="p-8 h-full">
+                                <h2 className="text-2xl font-bold text-text-primary mb-8">Envoyez-nous un message</h2>
+                                <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div className="space-y-2">
+                                            <label className="text-sm font-medium text-text-secondary">Prénom</label>
+                                            <Input placeholder="Votre prénom" />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-sm font-medium text-text-secondary">Nom</label>
+                                            <Input placeholder="Votre nom" />
+                                        </div>
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-sm font-medium text-text-secondary">Nom</label>
-                                        <Input placeholder="Votre nom" />
+                                        <label className="text-sm font-medium text-text-secondary">Email</label>
+                                        <Input type="email" placeholder="votre@email.com" />
                                     </div>
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-medium text-text-secondary">Email</label>
-                                    <Input type="email" placeholder="votre@email.com" />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-medium text-text-secondary">Sujet</label>
-                                    <Input placeholder="Comment pouvons-nous vous aider ?" />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-medium text-text-secondary">Message</label>
-                                    <textarea
-                                        className="w-full bg-bg-primary border border-border-primary rounded-xl p-4 text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-cyan/50 focus:ring-1 focus:ring-cyan/50 min-h-[150px] transition-all"
-                                        placeholder="Décrivez votre besoin ici..."
-                                    />
-                                </div>
-                                <Button className="w-full gap-2 py-6">
-                                    <Send size={18} />
-                                    Envoyer le message
-                                </Button>
-                            </form>
-                        </Card>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-medium text-text-secondary">Sujet</label>
+                                        <Input placeholder="Comment pouvons-nous vous aider ?" />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-medium text-text-secondary">Message</label>
+                                        <textarea
+                                            className="w-full bg-bg-primary border border-border-primary rounded-xl p-4 text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-cyan/50 focus:ring-1 focus:ring-cyan/50 min-h-[150px] transition-all"
+                                            placeholder="Décrivez votre besoin ici..."
+                                        />
+                                    </div>
+                                    <Button className="w-full gap-2 py-6">
+                                        <Send size={18} />
+                                        Envoyer le message
+                                    </Button>
+                                </form>
+                            </Card>
+                        </motion.div>
                     </div>
                 </div>
             </main>

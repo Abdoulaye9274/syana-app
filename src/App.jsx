@@ -24,6 +24,7 @@ const WhySyana = lazy(() => import('./pages/marketing/WhySyana'))
 const SupportPage = lazy(() => import('./pages/marketing/SupportPage'))
 const FaqPage = lazy(() => import('./pages/marketing/FaqPage'))
 const ContactPage = lazy(() => import('./pages/marketing/ContactPage'))
+const TestimonialsPage = lazy(() => import('./pages/marketing/TestimonialsPage'))
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'))
 const CguPage = lazy(() => import('./pages/legal/CguPage'))
 const PrivacyPage = lazy(() => import('./pages/legal/PrivacyPage'))
@@ -50,6 +51,7 @@ function App() {
                             <Route path="/support" element={<SupportPage />} />
                             <Route path="/faq" element={<FaqPage />} />
                             <Route path="/contact" element={<ContactPage />} />
+                            <Route path="/temoignages" element={<TestimonialsPage />} />
                             <Route path="/cgu" element={<CguPage />} />
                             <Route path="/confidentialite" element={<PrivacyPage />} />
                             <Route path="/mentions-legales" element={<LegalNoticePage />} />

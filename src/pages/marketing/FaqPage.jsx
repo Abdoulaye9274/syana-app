@@ -3,6 +3,8 @@ import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import { HelpCircle, MessageCircle } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { fadeUp, stagger } from '@/utils/animations'
 
 const FaqPage = () => {
     const faqItems = [
@@ -38,25 +40,41 @@ const FaqPage = () => {
 
             <main className="pt-32 pb-20 px-6">
                 <div className="max-w-4xl mx-auto">
-                    <div className="text-center mb-16">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 text-purple-400 text-sm font-medium mb-6">
+                    <motion.div
+                        variants={stagger}
+                        initial="hidden"
+                        animate="visible"
+                        className="text-center mb-16"
+                    >
+                        <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 text-purple-400 text-sm font-medium mb-6">
                             <HelpCircle size={16} />
                             Foire aux questions
-                        </div>
-                        <h1 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
+                        </motion.div>
+                        <motion.h1 variants={fadeUp} className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
                             Questions fréquentes
-                        </h1>
-                        <p className="text-xl text-text-secondary">
+                        </motion.h1>
+                        <motion.p variants={fadeUp} className="text-xl text-text-secondary">
                             Tout ce que vous devez savoir sur SYANA et comment nous pouvons transformer votre business.
-                        </p>
-                    </div>
+                        </motion.p>
+                    </motion.div>
 
-                    <div className="mb-20">
+                    <motion.div
+                        variants={fadeUp}
+                        initial="hidden"
+                        animate="visible"
+                        transition={{ delay: 0.4 }}
+                        className="mb-20"
+                    >
                         <Accordion items={faqItems} />
-                    </div>
+                    </motion.div>
 
-                    {/* CTA Section */}
-                    <div className="bg-gradient-to-br from-bg-card to-bg-card-hover border border-border-primary rounded-3xl p-12 text-center">
+                    <motion.div
+                        variants={fadeUp}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                        className="bg-gradient-to-br from-bg-card to-bg-card-hover border border-border-primary rounded-3xl p-12 text-center"
+                    >
                         <h2 className="text-2xl font-bold text-text-primary mb-4">Vous avez encore des questions ?</h2>
                         <p className="text-text-secondary mb-8">
                             Notre équipe est là pour vous répondre personnellement. Contactez-nous directement sur WhatsApp ou par email.
@@ -78,7 +96,7 @@ const FaqPage = () => {
                                 Page Contact
                             </Link>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </main>
 
