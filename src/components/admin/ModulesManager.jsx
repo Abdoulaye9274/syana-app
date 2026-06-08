@@ -4,6 +4,7 @@ import { Plus, Edit2, Trash2, Save, X, GripVertical, Video, FileText, Check, Upl
 import { collection, query, orderBy, getDocs, doc, setDoc, deleteDoc, serverTimestamp } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { db, storage } from '@/services/firebase/config'
+import { toast } from 'react-hot-toast'
 
 const ModulesManager = () => {
     const [modules, setModules] = useState([])
@@ -34,7 +35,7 @@ const ModulesManager = () => {
             setModules(prev => prev.filter(m => m.id !== id))
         } catch (error) {
             console.error("Error deleting module:", error)
-            alert("Erreur lors de la suppression")
+            toast.error("Erreur lors de la suppression.")
         }
     }
 
@@ -57,7 +58,7 @@ const ModulesManager = () => {
             fetchModules() // Refresh list
         } catch (error) {
             console.error("Error saving module:", error)
-            alert("Erreur lors de la sauvegarde")
+            toast.error("Erreur lors de la sauvegarde.")
         }
     }
 
@@ -78,7 +79,7 @@ const ModulesManager = () => {
     return (
         <div className="space-y-6">
             <div className="flex justify-between items-center">
-                <h3 className="text-xl font-bold text-white">Gestion des Modules</h3>
+                <h3 className="text-xl font-bold text-text-primary">Gestion des Modules</h3>
                 <Button onClick={() => setEditingModule({ order: modules.length + 1, lessons: [] })} variant="primary" size="sm">
                     <Plus size={16} className="mr-2" /> Nouveau Module
                 </Button>
@@ -86,13 +87,13 @@ const ModulesManager = () => {
 
             <div className="grid gap-4">
                 {modules.map((module) => (
-                    <Card key={module.id} className="p-4 flex flex-col md:flex-row gap-4 justify-between items-center transition-all hover:border-white/20">
+                    <Card key={module.id} className="p-4 flex flex-col md:flex-row gap-4 justify-between items-center transition-all hover:border-text-secondary/40">
                         <div className="flex items-center gap-4 flex-1">
-                            <div className="bg-bg-card border border-white/10 w-12 h-12 rounded-lg flex items-center justify-center font-bold text-cyan text-xl">
+                            <div className="bg-bg-card border border-border-primary w-12 h-12 rounded-lg flex items-center justify-center font-bold text-cyan text-xl">
                                 {module.order}
                             </div>
                             <div>
-                                <h4 className="font-bold text-white text-lg">{module.title}</h4>
+                                <h4 className="font-bold text-text-primary text-lg">{module.title}</h4>
                                 <div className="flex gap-2 text-sm text-text-secondary">
                                     <Badge variant="secondary">{module.phase}</Badge>
                                     <span>{module.lessons?.length || 0} leçons</span>
@@ -113,7 +114,7 @@ const ModulesManager = () => {
             </div>
 
             {modules.length === 0 && (
-                <div className="text-center py-10 text-text-secondary border border-dashed border-white/10 rounded-xl">
+                <div className="text-center py-10 text-text-secondary border border-dashed border-border-primary rounded-xl">
                     Aucun module. Créez-en un ou utilisez le "Seeder" pour démarrer.
                 </div>
             )}
@@ -161,16 +162,16 @@ const ModuleEditor = ({ initialData, onSave, onCancel }) => {
 
         } catch (error) {
             console.error("Upload failed", error)
-            alert("Echec de l'upload")
+            toast.error("Échec de l'upload.")
         } finally {
             setUploading(null)
         }
     }
 
     return (
-        <div className="bg-bg-card border border-white/10 rounded-xl p-6 space-y-6">
-            <div className="flex justify-between items-center border-b border-white/5 pb-4">
-                <h3 className="text-xl font-bold text-white">
+        <div className="bg-bg-card border border-border-primary rounded-xl p-6 space-y-6">
+            <div className="flex justify-between items-center border-b border-border-primary pb-4">
+                <h3 className="text-xl font-bold text-text-primary">
                     {initialData.id ? 'Modifier le module' : 'Créer un module'}
                 </h3>
                 <div className="flex gap-2">
@@ -212,7 +213,7 @@ const ModuleEditor = ({ initialData, onSave, onCancel }) => {
                     <div className="flex flex-col gap-2">
                         <label className="text-sm font-medium text-text-secondary">Description</label>
                         <textarea
-                            className="bg-bg-primary border border-white/10 rounded-lg p-3 text-white text-sm focus:border-cyan outline-none min-h-[100px]"
+                            className="bg-bg-primary border border-border-primary rounded-lg p-3 text-text-primary text-sm focus:border-cyan outline-none min-h-[100px]"
                             value={formData.description || ''}
                             onChange={e => setFormData({ ...formData, description: e.target.value })}
                         />
@@ -220,15 +221,15 @@ const ModuleEditor = ({ initialData, onSave, onCancel }) => {
                 </div>
 
                 {/* RIGHT: Lessons & Content */}
-                <div className="bg-bg-primary/30 rounded-xl p-4 border border-white/5 flex flex-col h-full">
+                <div className="bg-bg-secondary/30 rounded-xl p-4 border border-border-primary flex flex-col h-full">
                     <div className="flex justify-between items-center mb-4">
-                        <h4 className="font-bold text-white">Leçons & Contenu</h4>
+                        <h4 className="font-bold text-text-primary">Leçons & Contenu</h4>
                         <Button variant="secondary" size="sm" onClick={addLesson}><Plus size={14} /> Ajouter</Button>
                     </div>
 
                     <div className="space-y-4 overflow-y-auto flex-1 pr-2 max-h-[600px]">
                         {(formData.lessons || []).map((lesson, idx) => (
-                            <div key={idx} className="bg-bg-card border border-white/10 p-4 rounded-lg flex flex-col gap-3">
+                            <div key={idx} className="bg-bg-card border border-border-primary p-4 rounded-lg flex flex-col gap-3">
                                 <div className="flex justify-between items-start">
                                     <span className="text-xs font-bold text-cyan uppercase">Leçon {idx + 1}</span>
                                     <button onClick={() => removeLesson(idx)} className="text-red-400 hover:text-red-300">
@@ -245,7 +246,7 @@ const ModuleEditor = ({ initialData, onSave, onCancel }) => {
 
                                 <div className="flex gap-2">
                                     <select
-                                        className="bg-bg-primary border border-white/10 rounded-md text-xs text-white h-9 px-2 w-1/3"
+                                        className="bg-bg-primary border border-border-primary rounded-md text-xs text-text-primary h-9 px-2 w-1/3"
                                         value={lesson.type}
                                         onChange={e => updateLesson(idx, 'type', e.target.value)}
                                     >
@@ -262,7 +263,7 @@ const ModuleEditor = ({ initialData, onSave, onCancel }) => {
                                 </div>
 
                                 {/* UPLOAD AREA */}
-                                <div className="border-t border-white/5 pt-3 mt-1">
+                                <div className="border-t border-border-primary pt-3 mt-1">
                                     <label className="text-xs text-text-secondary mb-2 block">
                                         Contenu ({lesson.type === 'video' ? 'Vidéo MP4' : 'Fichier'})
                                     </label>

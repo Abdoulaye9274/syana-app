@@ -1,6 +1,9 @@
+// Les priceId Stripe sont lus depuis les variables d'environnement (jamais hardcodés)
+// À définir dans .env : VITE_STRIPE_PRICE_BASIC, VITE_STRIPE_PRICE_GUIDED, VITE_STRIPE_PRICE_PREMIUM
+
 export const pricingPlans = [
     {
-        id: 'start',
+        id: 'basic',
         name: 'Basic',
         price: '97',
         interval: 'mois',
@@ -16,7 +19,7 @@ export const pricingPlans = [
         ],
         buttonText: 'Commencer - Basic',
         recommended: false,
-        paymentLink: 'https://buy.stripe.com/test_basic_link_placeholder',
+        priceId: import.meta.env.VITE_STRIPE_PRICE_BASIC,
         color: 'text-white'
     },
     {
@@ -38,7 +41,7 @@ export const pricingPlans = [
         ],
         buttonText: 'Choisir - Medium',
         recommended: true,
-        paymentLink: 'https://buy.stripe.com/test_guided_link_placeholder',
+        priceId: import.meta.env.VITE_STRIPE_PRICE_GUIDED,
         color: 'text-cyan'
     },
     {
@@ -61,7 +64,7 @@ export const pricingPlans = [
         ],
         buttonText: 'Accéder au Premium',
         recommended: false,
-        paymentLink: 'https://buy.stripe.com/test_premium_link_placeholder',
+        priceId: import.meta.env.VITE_STRIPE_PRICE_PREMIUM,
         color: 'text-violet'
     }
 ]

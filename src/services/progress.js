@@ -91,12 +91,15 @@ export const updateLessonProgress = async (userId, moduleId, lessonId, completed
         const progressRef = doc(db, 'users', userId, 'progress', moduleId)
         const progressSnap = await getDoc(progressRef)
 
+        let latestSnap = progressSnap
         if (!progressSnap.exists()) {
-            // Initialiser si n'existe pas
-            await initializeModuleProgress(userId, moduleId, 1)
+            const moduleDoc = await getDoc(doc(db, 'modules', moduleId))
+            const moduleOrder = moduleDoc.exists() ? (moduleDoc.data().order || 1) : 1
+            await initializeModuleProgress(userId, moduleId, moduleOrder)
+            latestSnap = await getDoc(progressRef)
         }
 
-        const currentData = progressSnap.data() || {}
+        const currentData = latestSnap.data() || {}
         const lessonsCompleted = currentData.lessonsCompleted || []
 
         if (completed && !lessonsCompleted.includes(lessonId)) {
@@ -129,7 +132,9 @@ export const updateValidationChecklist = async (userId, moduleId, checklistItems
         const progressSnap = await getDoc(progressRef)
 
         if (!progressSnap.exists()) {
-            await initializeModuleProgress(userId, moduleId, 1)
+            const moduleDoc = await getDoc(doc(db, 'modules', moduleId))
+            const moduleOrder = moduleDoc.exists() ? (moduleDoc.data().order || 1) : 1
+            await initializeModuleProgress(userId, moduleId, moduleOrder)
         }
 
         // Calculer le pourcentage de complétion de la checklist
@@ -172,8 +177,10 @@ export const validateModule = async (userId, moduleId, moduleOrder) => {
             updatedAt: serverTimestamp()
         }, { merge: true })
 
-        // Mettre à jour le currentModule de l'utilisateur pour débloquer le suivant
-        const nextModule = moduleOrder + 1
+        // Mettre à jour le currentModule — Math.max pour ne jamais régresser
+        const userSnap = await getDoc(userRef)
+        const currentModuleValue = userSnap.data()?.currentModule || 1
+        const nextModule = Math.max(currentModuleValue, moduleOrder + 1)
         await setDoc(userRef, {
             currentModule: nextModule,
             updatedAt: serverTimestamp()

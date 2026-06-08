@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react'
-import { collection, query, orderBy, onSnapshot, doc, updateDoc } from 'firebase/firestore'
+import { collection, query, orderBy, onSnapshot, doc, updateDoc, serverTimestamp } from 'firebase/firestore'
 import { db } from '@/services/firebase/config'
 import { Card, Badge, Button } from '@/components/ui'
-import { Search, User, CreditCard, Shield } from 'lucide-react'
+import { Search, User } from 'lucide-react'
+import { toast } from 'react-hot-toast'
 
 const PLANS = {
     free: { label: 'Gratuit', color: 'gray' },
-    start: { label: 'Start (97€)', color: 'white' },
-    guided: { label: 'Guidé (197€)', color: 'cyan' },
+    basic: { label: 'Basic (97€)', color: 'white' },
+    guided: { label: 'Medium (197€)', color: 'cyan' },
     premium: { label: 'Premium (397€)', color: 'violet' }
 }
 
@@ -38,19 +39,21 @@ const UsersList = () => {
     }, [])
 
     const handlePlanChange = async (userId, newPlan) => {
+        const confirmed = window.confirm(`Confirmer le changement de plan vers "${PLANS[newPlan]?.label || newPlan}" ?`)
+        if (!confirmed) return
+
         setUpdatingId(userId)
         try {
             const userRef = doc(db, 'users', userId)
             await updateDoc(userRef, {
                 plan: newPlan,
-                subscriptionStatus: newPlan === 'free' ? 'free' : 'active', // Auto-activate status
-                updatedAt: new Date()
+                subscriptionStatus: newPlan === 'free' ? 'free' : 'active',
+                updatedAt: serverTimestamp()
             })
-            // Success feedback could be handled by a global toaster, but for now simple alert or local state is fine.
-            // A more polished way would be to show a small checklist icon temporarily.
+            toast.success('Plan mis à jour.')
         } catch (error) {
             console.error("Error updating plan:", error)
-            alert("Erreur lors de la mise à jour du plan")
+            toast.error("Erreur lors de la mise à jour du plan.")
         } finally {
             setUpdatingId(null)
         }
@@ -124,9 +127,9 @@ const UsersList = () => {
                                             className="bg-bg-primary border border-border-primary rounded px-3 py-1.5 text-sm text-text-secondary focus:outline-none focus:border-cyan"
                                         >
                                             <option value="free">Gratuit</option>
-                                            <option value="start">Start</option>
-                                            <option value="guided">Guidé</option>
-                                            <option value="premium">Premium</option>
+                                            <option value="basic">Basic (97€)</option>
+                                            <option value="guided">Medium (197€)</option>
+                                            <option value="premium">Premium (397€)</option>
                                         </select>
                                         {updatingId === user.id && (
                                             <div className="animate-spin h-4 w-4 border-2 border-cyan border-t-transparent rounded-full" />

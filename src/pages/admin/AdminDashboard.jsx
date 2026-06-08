@@ -8,7 +8,7 @@ import AdminReviews from '@/components/admin/AdminReviews'
 import { ShieldCheck, Users, TrendingUp, FileCheck, Clock, AlertCircle, Star } from 'lucide-react'
 import { Card, Badge, Loading } from '@/components/ui'
 import { useEffect, useState } from 'react'
-import { collection, getDocs, query, where } from 'firebase/firestore'
+import { collection, getDocs, collectionGroup } from 'firebase/firestore'
 import { db } from '@/services/firebase/config'
 
 const AdminDashboard = () => {
@@ -29,20 +29,19 @@ const AdminDashboard = () => {
                 const usersSnap = await getDocs(collection(db, 'users'))
                 const totalUsers = usersSnap.size
                 const activeSubscriptions = usersSnap.docs.filter(
-                    doc => doc.data().subscriptionStatus === 'active'
+                    doc => ['active', 'trialing'].includes(doc.data().subscriptionStatus)
                 ).length
 
-                // 2. Fetch deliverables stats
-                const deliverablesSnap = await getDocs(collection(db, 'deliverables'))
-                const pendingDeliverables = deliverablesSnap.docs.filter(
-                    doc => doc.data().status === 'submitted'
-                ).length
-                const approvedDeliverables = deliverablesSnap.docs.filter(
-                    doc => doc.data().status === 'approved'
-                ).length
+                // 2. Fetch deliverables stats via collectionGroup
+                const allDeliverables = await getDocs(collectionGroup(db, 'deliverables'))
+                const pendingDeliverables = allDeliverables.docs.filter(d => d.data().status === 'pending').length
+                const approvedDeliverables = allDeliverables.docs.filter(d => d.data().status === 'approved').length
 
-                // 3. Calculate revenue (simplified)
-                const totalRevenue = activeSubscriptions * 97 // Basic plan ~ 97€/mois
+                // 3. Calculate revenue based on actual plan
+                const PLAN_PRICES = { basic: 97, guided: 197, premium: 397 }
+                const totalRevenue = usersSnap.docs
+                    .filter(d => ['active', 'trialing'].includes(d.data().subscriptionStatus))
+                    .reduce((sum, d) => sum + (PLAN_PRICES[d.data().plan] || 97), 0)
 
                 // 4. Determine total number of modules for percentage calculation
                 let totalModulesCount = 14
@@ -51,19 +50,19 @@ const AdminDashboard = () => {
                     totalModulesCount = modulesSnap.size
                 }
 
-                // 5. Calculate average completion
-                let totalCompletion = 0
-                let userCount = 0
-                for (const userDoc of usersSnap.docs) {
-                    const progressRef = collection(db, 'users', userDoc.id, 'progress')
-                    const progressSnap = await getDocs(progressRef)
-                    if (progressSnap.size > 0) {
-                        const validated = progressSnap.docs.filter(p => p.data().validated).length
-                        totalCompletion += (validated / totalModulesCount) * 100
-                        userCount++
-                    }
-                }
-                const avgCompletion = userCount > 0 ? Math.round(totalCompletion / userCount) : 0
+                // 5. Calculate average completion (parallel)
+                const progressResults = await Promise.all(
+                    usersSnap.docs.map(async (userDoc) => {
+                        const progressSnap = await getDocs(collection(db, 'users', userDoc.id, 'progress'))
+                        if (progressSnap.size === 0) return null
+                        const validated = progressSnap.docs.filter(p => p.data().completed).length
+                        return (validated / totalModulesCount) * 100
+                    })
+                )
+                const validResults = progressResults.filter(r => r !== null)
+                const avgCompletion = validResults.length > 0
+                    ? Math.round(validResults.reduce((a, b) => a + b, 0) / validResults.length)
+                    : 0
 
                 setStats({
                     totalUsers,

@@ -30,7 +30,8 @@ const ProgressBar = ({
                     </defs>
                     {/* Background circle */}
                     <circle
-                        stroke="rgba(255, 255, 255, 0.05)"
+                        stroke="currentColor"
+                        className="text-border-primary opacity-30"
                         fill="transparent"
                         strokeWidth={strokeWidth}
                         r={normalizedRadius}
@@ -52,7 +53,7 @@ const ProgressBar = ({
                     />
                 </svg>
                 {showLabel && (
-                    <span className="absolute text-sm font-semibold text-white">
+                    <span className="absolute text-sm font-semibold text-text-primary">
                         {Math.round(clampedValue)}%
                     </span>
                 )}
@@ -71,11 +72,11 @@ const ProgressBar = ({
         <div className={`w-full ${className}`}>
             {showLabel && (
                 <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-white">Progression</span>
+                    <span className="text-sm font-medium text-text-primary">Progression</span>
                     <span className="text-sm font-semibold text-cyan">{Math.round(clampedValue)}%</span>
                 </div>
             )}
-            <div className={`w-full bg-white/5 rounded-full overflow-hidden ${heights[size]}`}>
+            <div className={`w-full bg-text-secondary/10 rounded-full overflow-hidden ${heights[size]}`}>
                 <div
                     className="h-full bg-gradient-primary rounded-full transition-all duration-500 ease-out"
                     style={{ width: `${clampedValue}%` }}

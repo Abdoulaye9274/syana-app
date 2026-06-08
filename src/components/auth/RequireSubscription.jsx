@@ -19,9 +19,7 @@ const RequireSubscription = ({ children }) => {
         return children
     }
 
-    // Check subscription status
-    // Permissive values: 'active', 'trialing'
-    const hasActiveSubscription = ['active', 'trialing'].includes(userProfile?.subscriptionStatus)
+    const hasActiveSubscription = ['active', 'trialing', 'paused'].includes(userProfile?.subscriptionStatus)
 
     if (!hasActiveSubscription) {
         // Redirect to pricing page, but save the location they tried to access

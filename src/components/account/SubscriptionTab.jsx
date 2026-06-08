@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { Card, Button, Badge } from '@/components/ui'
 import { CreditCard, Check, AlertTriangle } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
@@ -5,6 +6,7 @@ import { getPlanById } from '@/data/plansData'
 
 const SubscriptionTab = () => {
     const { userProfile } = useAuth()
+    const navigate = useNavigate()
 
     // Fallback si pas de profil ou plan inconnu
     const currentPlanId = userProfile?.plan || 'free'
@@ -15,7 +17,7 @@ const SubscriptionTab = () => {
 
     if (currentPlanId === 'free' || !planDetails) {
         return (
-            <div className="text-center py-12 bg-bg-card border border-border-primary rounded-2xl">
+            <div className="text-center py-12 bg-bg-secondary border border-border-primary rounded-2xl">
                 <div className="w-16 h-16 bg-bg-card-hover rounded-full flex items-center justify-center mx-auto mb-6">
                     <AlertTriangle className="text-yellow-500" size={32} />
                 </div>
@@ -25,7 +27,7 @@ const SubscriptionTab = () => {
                 </p>
                 <Button
                     className="bg-cyan hover:bg-cyan/90 text-black font-bold px-8 shadow-glow-cyan"
-                    onClick={() => window.location.href = '/tarifs'}
+                    onClick={() => navigate('/tarifs')}
                 >
                     Voir les offres
                 </Button>
@@ -59,7 +61,7 @@ const SubscriptionTab = () => {
                         </div>
                     </div>
 
-                    <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-8 border border-white/10">
+                    <div className="bg-white/15 rounded-xl p-6 mb-8 border border-white/25">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <span className="text-sm text-white/80 block mb-1">Membre depuis le</span>
@@ -67,10 +69,13 @@ const SubscriptionTab = () => {
                                     {userProfile?.createdAt ? new Date(userProfile.createdAt.seconds * 1000).toLocaleDateString('fr-FR') : '-'}
                                 </span>
                             </div>
-                            {/* Mock data for billing cycle since we don't have stripe data yet */}
                             <div>
-                                <span className="text-sm text-white/80 block mb-1">Prochain prélèvement (Est.)</span>
-                                <span className="text-xl font-bold">15 du mois</span>
+                                <span className="text-sm text-white/80 block mb-1">Prochain prélèvement</span>
+                                <span className="text-xl font-bold">
+                                    {userProfile?.subscriptionCurrentPeriodEnd
+                                        ? new Date(userProfile.subscriptionCurrentPeriodEnd.seconds * 1000).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+                                        : '-'}
+                                </span>
                             </div>
                         </div>
                     </div>

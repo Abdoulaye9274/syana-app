@@ -42,7 +42,7 @@ const AdminTipEditor = () => {
             </div>
 
             <textarea
-                className="w-full bg-bg-primary border border-white/10 rounded-lg p-3 text-sm text-white focus:border-cyan focus:ring-1 focus:ring-cyan outline-none resize-none h-24"
+                className="w-full bg-bg-primary border border-border-primary rounded-lg p-3 text-sm text-text-primary focus:border-cyan focus:ring-1 focus:ring-cyan outline-none resize-none h-24"
                 placeholder="Écrivez le conseil du jour..."
                 value={tip}
                 onChange={(e) => setTip(e.target.value)}

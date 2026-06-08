@@ -3,6 +3,7 @@ import { lazy, Suspense } from 'react'
 import { Loading, WhatsAppButton } from '@/components/ui'
 import ProtectedRoute from '@/components/layout/ProtectedRoute'
 import RequireAdmin from '@/components/auth/RequireAdmin'
+import GuestRoute from '@/components/auth/GuestRoute'
 import { ThemeProvider } from '@/context/ThemeContext'
 import ErrorBoundary from '@/components/layout/ErrorBoundary'
 import { Toaster } from 'react-hot-toast'
@@ -29,6 +30,7 @@ const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'))
 const CguPage = lazy(() => import('./pages/legal/CguPage'))
 const PrivacyPage = lazy(() => import('./pages/legal/PrivacyPage'))
 const LegalNoticePage = lazy(() => import('./pages/legal/LegalNoticePage'))
+const PaymentSuccess = lazy(() => import('./pages/payment/PaymentSuccess'))
 
 const PageLoader = () => (
     <div className="min-h-screen bg-bg-primary flex items-center justify-center">
@@ -55,11 +57,12 @@ function App() {
                             <Route path="/cgu" element={<CguPage />} />
                             <Route path="/confidentialite" element={<PrivacyPage />} />
                             <Route path="/mentions-legales" element={<LegalNoticePage />} />
+                            <Route path="/paiement-succes" element={<PaymentSuccess />} />
 
-                            {/* Auth Routes */}
-                            <Route path="/connexion" element={<Login />} />
-                            <Route path="/inscription" element={<Register />} />
-                            <Route path="/mot-de-passe-oublie" element={<ForgotPassword />} />
+                            {/* Auth Routes — redirige vers le dashboard si déjà connecté */}
+                            <Route path="/connexion" element={<GuestRoute><Login /></GuestRoute>} />
+                            <Route path="/inscription" element={<GuestRoute><Register /></GuestRoute>} />
+                            <Route path="/mot-de-passe-oublie" element={<GuestRoute><ForgotPassword /></GuestRoute>} />
 
                             {/* Protected Routes */}
                             <Route path="/tableau-de-bord" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
@@ -74,8 +77,17 @@ function App() {
                                 </RequireAdmin>
                             } />
 
-                            {/* Dev Routes */}
-                            <Route path="/design-system" element={<DesignSystemDemo />} />
+                            {/* Dev Routes — protégé admin */}
+                            <Route path="/design-system" element={<RequireAdmin><DesignSystemDemo /></RequireAdmin>} />
+
+                            {/* 404 */}
+                            <Route path="*" element={
+                                <div className="min-h-screen bg-bg-primary flex flex-col items-center justify-center text-center px-4">
+                                    <h1 className="text-8xl font-black text-text-primary mb-4">404</h1>
+                                    <p className="text-text-secondary text-xl mb-8">Cette page n'existe pas.</p>
+                                    <a href="/" className="text-cyan font-semibold hover:underline">Retour à l'accueil</a>
+                                </div>
+                            } />
                         </Routes>
                         <WhatsAppButton />
                         <Toaster

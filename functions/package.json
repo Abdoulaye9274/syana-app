@@ -1,0 +1,20 @@
+{
+  "name": "syana-functions",
+  "version": "1.0.0",
+  "description": "Firebase Cloud Functions for SYANA - Stripe payments",
+  "main": "index.js",
+  "engines": {
+    "node": "18"
+  },
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^4.7.0",
+    "stripe": "^14.21.0"
+  }
+}

@@ -33,6 +33,14 @@ const faqs = [
     {
         q: "Puis-je changer de formule plus tard ?",
         a: "Oui, vous pouvez passer d'un plan Basic à Medium, ou de Medium à Premium à tout moment. Vous ne paierez que la différence au prorata."
+    },
+    {
+        q: "Y a-t-il une garantie satisfait ou remboursé ?",
+        a: "Oui. Nous offrons une garantie satisfait ou remboursé de 14 jours. Si vous n'êtes pas satisfait·e, contactez le support et vous serez remboursé·e sans question."
+    },
+    {
+        q: "Le paiement en plusieurs fois est-il possible ?",
+        a: "Pour le plan Premium, le paiement en 3 fois sans frais est disponible directement au moment du paiement via Stripe. Pour les autres plans, contactez le support."
     }
 ]
 
@@ -82,16 +90,16 @@ const Pricing = () => {
                         className="text-center max-w-3xl mx-auto mb-16 relative z-10"
                     >
                         <motion.span variants={fadeUp} className="text-cyan tracking-wider uppercase text-sm font-bold mb-4 block">
-                            Tarification Globale
+                            Nos formules
                         </motion.span>
                         <motion.h1 variants={fadeUp} className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-text-primary mb-6">
-                            Investissez dans votre{' '}
+                            Choisissez votre{' '}
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan to-violet-400">
-                                exécution
+                                accompagnement
                             </span>
                         </motion.h1>
                         <motion.p variants={fadeUp} className="text-lg text-text-secondary">
-                            Choisissez la formule qui correspond à votre ambition. Tous les plans incluent l'accès à vie aux mises à jour.
+                            Chaque formule est conçue pour vous faire progresser à votre rythme, avec le niveau d'accompagnement dont vous avez besoin.
                         </motion.p>
                     </motion.div>
 
@@ -195,20 +203,20 @@ const Pricing = () => {
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true, margin: '-80px' }}
-                        className="max-w-5xl mx-auto bg-gradient-to-r from-violet/20 to-cyan/20 border border-violet/30 rounded-3xl p-12 text-center relative overflow-hidden"
+                        className="max-w-5xl mx-auto bg-gradient-to-r from-violet-700 to-rose-500 rounded-3xl p-12 text-center relative overflow-hidden shadow-2xl"
                     >
                         <div className="absolute top-0 right-0 w-64 h-64 bg-cyan/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
                         <div className="absolute bottom-0 left-0 w-64 h-64 bg-violet/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
                         <div className="relative z-10">
-                            <h2 className="text-3xl md:text-5xl font-bold text-text-primary mb-6">
-                                Prêt-e à structurer ton business ?
+                            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+                                Prêt·e à structurer ton business ?
                             </h2>
-                            <p className="text-text-secondary text-lg mb-8 max-w-2xl mx-auto">
+                            <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
                                 Arrêtez de collectionner les formations et commencez à construire un système d'exécution imparable.
                             </p>
                             <Link to="/inscription">
-                                <Button size="lg" className="h-14 px-10 rounded-full shadow-glow-cyan font-bold">
+                                <Button size="lg" className="h-14 px-10 rounded-full bg-white text-violet-700 hover:bg-white/90 font-bold shadow-xl">
                                     Rejoindre SYANA
                                 </Button>
                             </Link>

@@ -1,10 +1,26 @@
+import { useState } from 'react'
 import { Card, Button } from '@/components/ui'
-import { FileText, ExternalLink, Mail } from 'lucide-react'
+import { ExternalLink, Mail } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
+import { openBillingPortal } from '@/services/stripe'
+import { toast } from 'react-hot-toast'
 
 const BillingTab = () => {
     const { userProfile } = useAuth()
+    const [loading, setLoading] = useState(false)
     const isPremium = ['active', 'trialing'].includes(userProfile?.subscriptionStatus)
+
+    const handleManageBilling = async () => {
+        setLoading(true)
+        try {
+            const { url } = await openBillingPortal()
+            window.location.href = url
+        } catch {
+            toast.error('Impossible d\'ouvrir le portail de facturation. Réessayez.')
+        } finally {
+            setLoading(false)
+        }
+    }
 
     return (
         <Card>
@@ -24,8 +40,10 @@ const BillingTab = () => {
                     <div className="pt-4">
                         <Button
                             variant="secondary"
-                            className="border-white/20 hover:bg-white/10"
-                            onClick={() => window.location.href = 'mailto:support@syana.com?subject=Gestion%20facturation'}
+                            className="border-border-primary hover:bg-bg-card-hover"
+                            onClick={handleManageBilling}
+                            loading={loading}
+                            disabled={loading}
                         >
                             <ExternalLink size={16} className="mr-2" />
                             Gérer sur Stripe

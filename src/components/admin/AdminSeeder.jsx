@@ -1,6 +1,6 @@
 import { modulesData } from '@/data/modulesData'
 import { db } from '@/services/firebase/config'
-import { collection, doc, writeBatch } from 'firebase/firestore'
+import { collection, doc, writeBatch, serverTimestamp } from 'firebase/firestore'
 import { Button } from '@/components/ui'
 import { useState } from 'react'
 import { Check, Loader2, AlertTriangle, Database } from 'lucide-react'
@@ -27,8 +27,8 @@ const AdminSeeder = () => {
 
                 batch.set(docRef, {
                     ...module,
-                    createdAt: new Date().toISOString(),
-                    updatedAt: new Date().toISOString()
+                    createdAt: serverTimestamp(),
+                    updatedAt: serverTimestamp()
                 })
             })
 
@@ -49,7 +49,7 @@ const AdminSeeder = () => {
                     <Database size={24} />
                 </div>
                 <div>
-                    <h2 className="text-xl font-bold text-white">Zone Admin</h2>
+                    <h2 className="text-xl font-bold text-text-primary">Zone Admin</h2>
                     <p className="text-sm text-text-secondary">Injection de données</p>
                 </div>
             </div>

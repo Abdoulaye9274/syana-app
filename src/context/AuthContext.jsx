@@ -6,6 +6,7 @@ import {
     signOut,
     sendPasswordResetEmail,
     updateProfile,
+    updatePassword,
     GoogleAuthProvider,
     signInWithPopup
 } from 'firebase/auth'
@@ -64,6 +65,10 @@ export const AuthProvider = ({ children }) => {
         return updateProfile(auth.currentUser, { displayName })
     }
 
+    const updateUserPassword = (newPassword) => {
+        return updatePassword(auth.currentUser, newPassword)
+    }
+
     const loginWithGoogle = () => {
         const provider = new GoogleAuthProvider()
         return signInWithPopup(auth, provider)
@@ -72,11 +77,13 @@ export const AuthProvider = ({ children }) => {
     const value = {
         user,
         userProfile,
+        loading,
         signup,
         login,
         logout,
         resetPassword,
         updateUser,
+        updateUserPassword,
         loginWithGoogle
     }
 

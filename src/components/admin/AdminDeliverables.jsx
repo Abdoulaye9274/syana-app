@@ -4,9 +4,10 @@ import {
     CheckCircle2, XCircle, ExternalLink, Clock,
     MessageSquare, UploadCloud, Loader2, FileText, Search
 } from 'lucide-react'
-import { collection, query, where, getDocs } from 'firebase/firestore'
+import { doc, getDoc } from 'firebase/firestore'
 import { db } from '@/services/firebase/config'
-import { uploadAdminCorrection, saveAdminReview } from '@/services/deliverables'
+import { getPendingDeliverables, uploadAdminCorrection, saveAdminReview } from '@/services/deliverables'
+import { toast } from 'react-hot-toast'
 
 const AdminDeliverables = () => {
     const [deliverables, setDeliverables] = useState([])
@@ -24,23 +25,21 @@ const AdminDeliverables = () => {
     const fetchPendingDeliverables = async () => {
         setLoading(true)
         try {
-            const usersSnap = await getDocs(collection(db, 'users'))
-            const promises = usersSnap.docs.map(async (userDoc) => {
-                const userData = userDoc.data()
-                const dRef = collection(db, 'users', userDoc.id, 'deliverables')
-                const q = query(dRef, where('status', '==', 'pending'))
-                const dSnap = await getDocs(q)
+            const delivs = await getPendingDeliverables()
 
-                return dSnap.docs.map(d => ({
-                    id: d.id,
-                    ...d.data(),
-                    uid: userDoc.id,
-                    userDisplayName: userData.displayName || userData.email
-                }))
+            // Fetch unique user display names
+            const userIds = [...new Set(delivs.map(d => d.userId))]
+            const userDocs = await Promise.all(userIds.map(uid => getDoc(doc(db, 'users', uid))))
+            const userMap = {}
+            userDocs.forEach(snap => {
+                if (snap.exists()) userMap[snap.id] = snap.data().displayName || snap.data().email
             })
 
-            const results = await Promise.all(promises)
-            setDeliverables(results.flat())
+            setDeliverables(delivs.map(d => ({
+                ...d,
+                uid: d.userId,
+                userDisplayName: userMap[d.userId] || d.userId
+            })))
         } catch (error) {
             console.error('Error fetching admin deliverables:', error)
         } finally {
@@ -69,7 +68,7 @@ const AdminDeliverables = () => {
             setFeedbackInputs(prev => { const n = { ...prev }; delete n[k]; return n })
         } catch (error) {
             console.error('Error updating deliverable:', error)
-            alert('Erreur lors de la validation')
+            toast.error('Erreur lors de la validation.')
         } finally {
             setProcessingId(null)
         }
@@ -79,7 +78,7 @@ const AdminDeliverables = () => {
 
     if (deliverables.length === 0) {
         return (
-            <div className="p-8 text-center text-text-secondary bg-bg-card/30 rounded-2xl border border-white/5">
+            <div className="p-8 text-center text-text-secondary bg-bg-card/30 rounded-2xl border border-border-primary">
                 <CheckCircle2 className="mx-auto mb-3 text-green-500/50" size={32} />
                 <p>Aucun livrable en attente.</p>
             </div>
@@ -104,7 +103,7 @@ const AdminDeliverables = () => {
                     placeholder="Rechercher par utilisateur ou module..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full bg-bg-primary/50 border border-white/10 rounded-lg py-2 pl-9 pr-4 text-sm text-white focus:border-cyan outline-none"
+                    className="w-full bg-bg-primary/50 border border-border-primary rounded-lg py-2 pl-9 pr-4 text-sm text-text-primary focus:border-cyan outline-none"
                 />
             </div>
 
@@ -118,7 +117,7 @@ const AdminDeliverables = () => {
                 const selectedFile = correctionFiles[k]
 
                 return (
-                    <Card key={k} className="p-5 border-white/10 flex flex-col gap-4">
+                    <Card key={k} className="p-5 border-border-primary flex flex-col gap-4">
                         {/* Header */}
                         <div className="flex justify-between items-start">
                             <div>
@@ -129,7 +128,7 @@ const AdminDeliverables = () => {
                                         {item.submittedAt?.toDate().toLocaleDateString('fr-FR')}
                                     </span>
                                 </div>
-                                <h4 className="font-bold text-white">{item.userDisplayName}</h4>
+                                <h4 className="font-bold text-text-primary">{item.userDisplayName}</h4>
                                 <p className="text-sm text-text-secondary">Module : {item.moduleId}</p>
                             </div>
                             <a
@@ -147,7 +146,7 @@ const AdminDeliverables = () => {
                         <div className="relative">
                             <MessageSquare className="absolute top-3 left-3 text-text-secondary" size={16} />
                             <textarea
-                                className="w-full bg-bg-primary/50 border border-white/10 rounded-lg py-2 pl-10 pr-4 text-sm text-white focus:border-cyan outline-none resize-none h-20"
+                                className="w-full bg-bg-primary/50 border border-border-primary rounded-lg py-2 pl-10 pr-4 text-sm text-text-primary focus:border-cyan outline-none resize-none h-20"
                                 placeholder="Feedback écrit pour l'élève..."
                                 value={feedbackInputs[k] || ''}
                                 onChange={(e) => setFeedbackInputs(prev => ({ ...prev, [k]: e.target.value }))}

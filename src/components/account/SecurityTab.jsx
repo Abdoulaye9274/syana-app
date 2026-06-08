@@ -1,16 +1,19 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Card, Input, Button } from '@/components/ui'
 import { useAuth } from '@/context/AuthContext'
-import { Check, AlertCircle, Lock } from 'lucide-react'
+import { httpsCallable } from 'firebase/functions'
+import { functions } from '@/services/firebase/config'
+import { Check, AlertCircle, Lock, Trash2 } from 'lucide-react'
+import { toast } from 'react-hot-toast'
 
 const SecurityTab = () => {
-    const { updateUserPassword } = useAuth()
+    const { updateUserPassword, logout } = useAuth()
+    const navigate = useNavigate()
 
-    const [passwords, setPasswords] = useState({
-        newPassword: '',
-        confirmPassword: ''
-    })
+    const [passwords, setPasswords] = useState({ newPassword: '', confirmPassword: '' })
     const [loading, setLoading] = useState(false)
+    const [deleting, setDeleting] = useState(false)
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState('')
 
@@ -22,8 +25,8 @@ const SecurityTab = () => {
             return setError("Les mots de passe ne correspondent pas.")
         }
 
-        if (passwords.newPassword.length < 6) {
-            return setError("Le mot de passe doit faire au moins 6 caractères.")
+        if (passwords.newPassword.length < 8) {
+            return setError("Le mot de passe doit faire au moins 8 caractères.")
         }
 
         setLoading(true)
@@ -42,6 +45,27 @@ const SecurityTab = () => {
             }
         } finally {
             setLoading(false)
+        }
+    }
+
+    const handleDeleteAccount = async () => {
+        const confirmed = window.confirm(
+            'Êtes-vous sûr de vouloir supprimer définitivement votre compte ? Cette action est irréversible et supprimera toutes vos données ainsi que votre abonnement.'
+        )
+        if (!confirmed) return
+
+        setDeleting(true)
+        try {
+            const deleteUserData = httpsCallable(functions, 'deleteUserData')
+            await deleteUserData()
+            toast.success('Votre compte a été supprimé.')
+            await logout()
+            navigate('/')
+        } catch (err) {
+            console.error(err)
+            toast.error('Erreur lors de la suppression. Veuillez contacter le support.')
+        } finally {
+            setDeleting(false)
         }
     }
 
@@ -97,9 +121,28 @@ const SecurityTab = () => {
             </div>
 
             <div className="mt-8 pt-8 border-t border-border-primary">
-                <p className="text-sm text-text-secondary">
+                <p className="text-sm text-text-secondary mb-6">
                     En cas de problème de sécurité, contactez immédiatement le support.
                 </p>
+
+                {/* Zone danger — Droit à l'oubli RGPD */}
+                <div className="border border-red-500/20 rounded-xl p-6 bg-red-500/5">
+                    <h4 className="text-base font-bold text-red-500 mb-2 flex items-center gap-2">
+                        <Trash2 size={18} />
+                        Supprimer mon compte
+                    </h4>
+                    <p className="text-sm text-text-secondary mb-4">
+                        Cette action est irréversible. Toutes vos données, votre progression et votre abonnement seront définitivement supprimés (conformément au RGPD, droit à l'oubli).
+                    </p>
+                    <Button
+                        variant="danger"
+                        onClick={handleDeleteAccount}
+                        loading={deleting}
+                        disabled={deleting}
+                    >
+                        Supprimer définitivement mon compte
+                    </Button>
+                </div>
             </div>
         </Card>
     )

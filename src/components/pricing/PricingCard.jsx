@@ -1,8 +1,41 @@
-import { CheckCircle2 } from 'lucide-react'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { CheckCircle2, Loader2 } from 'lucide-react'
 import { Button, Card, Badge } from '@/components/ui'
+import { useAuth } from '@/context/AuthContext'
+import { startCheckout } from '@/services/stripe'
+import { toast } from 'react-hot-toast'
 
 const PricingCard = ({ plan }) => {
-    const { name, price, interval, subtitle, description, features, recommended, paymentLink, color } = plan
+    const { name, price, interval, subtitle, description, features, recommended, priceId, color } = plan
+    const { user } = useAuth()
+    const navigate = useNavigate()
+    const [loading, setLoading] = useState(false)
+
+    const handleCheckout = async () => {
+        // Non connecté → rediriger vers inscription avec le plan en mémoire
+        if (!user) {
+            navigate(`/inscription?redirect=/tarifs`)
+            return
+        }
+
+        if (!priceId) {
+            toast.error('Ce plan n\'est pas encore disponible.')
+            return
+        }
+
+        setLoading(true)
+        try {
+            const { url } = await startCheckout(priceId)
+            // Redirection vers Stripe Checkout (page hébergée par Stripe — PCI DSS compliant)
+            window.location.href = url
+        } catch (err) {
+            console.error('Checkout error:', err)
+            toast.error('Une erreur est survenue. Veuillez réessayer.')
+        } finally {
+            setLoading(false)
+        }
+    }
 
     return (
         <div className={`relative flex flex-col h-full ${recommended ? 'transform md:-translate-y-4' : ''}`}>
@@ -57,25 +90,28 @@ const PricingCard = ({ plan }) => {
                     </ul>
                 </div>
 
-                <a
-                    href={paymentLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block mt-auto"
+                <button
+                    onClick={handleCheckout}
+                    disabled={loading}
+                    className={`w-full mt-auto py-3 px-6 rounded-lg font-bold transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed ${
+                        recommended
+                            ? 'bg-white/20 hover:bg-white/30 text-white border border-white/30 shadow-lg'
+                            : 'bg-bg-primary/50 hover:bg-bg-card-hover text-text-primary border border-border-primary hover:border-cyan/50'
+                    }`}
                 >
-                    {recommended ? (
-                        <button className="w-full py-3 px-6 rounded-lg font-bold text-white bg-white/20 hover:bg-white/30 transition-all border border-white/30 shadow-lg">
-                            {plan.buttonText || 'Choisir ce plan'}
-                        </button>
+                    {loading ? (
+                        <>
+                            <Loader2 size={16} className="animate-spin" />
+                            Chargement...
+                        </>
                     ) : (
-                        <Button
-                            variant="secondary"
-                            className="w-full justify-center group bg-bg-primary/50"
-                        >
-                            {plan.buttonText || 'Choisir ce plan'}
-                        </Button>
+                        plan.buttonText || 'Choisir ce plan'
                     )}
-                </a>
+                </button>
+
+                <p className={`text-center text-xs mt-3 ${recommended ? 'text-white/50' : 'text-text-secondary/50'}`}>
+                    Paiement sécurisé · Annulation à tout moment
+                </p>
             </Card>
         </div>
     )

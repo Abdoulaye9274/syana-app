@@ -4,6 +4,7 @@ import {
     setDoc,
     getDoc,
     getDocs,
+    updateDoc,
     query,
     where,
     orderBy,
@@ -106,7 +107,7 @@ export const getUserDeliverable = async (userId, moduleId) => {
 export const getUserDeliverablesResult = async (userId) => {
     try {
         const deliverablesRef = collection(db, 'users', userId, 'deliverables')
-        const q = query(deliverablesRef, orderBy('createdAt', 'desc'))
+        const q = query(deliverablesRef, orderBy('submittedAt', 'desc'))
         const querySnapshot = await getDocs(q)
 
         return querySnapshot.docs.map(doc => ({
