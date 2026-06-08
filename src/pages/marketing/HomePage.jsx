@@ -110,7 +110,7 @@ const HomePage = () => {
             <Navbar />
 
             {/* ── HERO ── */}
-            <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-24 overflow-hidden">
+            <section className="relative flex flex-col items-center text-center px-6 pt-32 pb-20 md:pt-44 md:pb-32 overflow-hidden" style={{ minHeight: '100svh' }}>
                 {/* Background */}
                 <div className="absolute inset-0 z-0">
                     {!videoError && (
@@ -169,7 +169,7 @@ const HomePage = () => {
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                        transition={{ duration: 0.7, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
                         className="text-xl md:text-2xl text-text-secondary max-w-2xl mx-auto mb-12 leading-relaxed"
                     >
                         Transformez votre vision en entreprise structurée.
@@ -181,8 +181,8 @@ const HomePage = () => {
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 1.5 }}
-                        className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-24"
+                        transition={{ duration: 0.7, delay: 1.1 }}
+                        className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
                     >
                         <Link to="/inscription">
                             <button className="group inline-flex items-center h-14 px-10 bg-white text-gray-900 hover:bg-gray-100 rounded-full text-base font-bold shadow-2xl shadow-white/10 transition-all duration-300">
@@ -202,7 +202,7 @@ const HomePage = () => {
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 1.8 }}
+                        transition={{ duration: 0.7, delay: 1.3 }}
                         className="grid grid-cols-3 gap-4 sm:gap-12 pt-12 border-t border-border-primary max-w-lg mx-auto"
                     >
                         {[
@@ -224,7 +224,7 @@ const HomePage = () => {
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 2.6, duration: 1 }}
+                    transition={{ delay: 1.8, duration: 1 }}
                     className="absolute bottom-8 left-1/2 -translate-x-1/2"
                 >
                     <motion.div
