@@ -78,7 +78,7 @@ const Header = ({ title, subtitle, onMenuToggle }) => {
                         className={`relative w-10 h-10 flex items-center justify-center rounded-button transition-colors ${showNotifications ? 'bg-cyan/20 text-cyan' : 'text-text-secondary hover:text-text-primary hover:bg-bg-card-hover'}`}
                     >
                         <Bell size={20} />
-                        <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-rose-500 rounded-full animate-pulse" />
+                        <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-rose-500 rounded-full" />
                     </button>
 
                     {showNotifications && (

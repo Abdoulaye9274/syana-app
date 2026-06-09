@@ -3,11 +3,11 @@ import { Button } from '@/components/ui'
 import { ArrowRight, Play, Star, Zap, Target, Layers } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { motion, useInView as useFMInView } from 'framer-motion'
-import { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { fadeUp, stagger, scaleIn } from '@/utils/animations'
 
 // ── Animated counter ────────────────────────────────────────────────────────
-const AnimatedCounter = ({ target, suffix = '' }) => {
+const AnimatedCounter = React.memo(({ target, suffix = '' }) => {
     const ref = useRef(null)
     const isInView = useFMInView(ref, { once: true, margin: '-50px' })
     const [count, setCount] = useState(0)
@@ -28,10 +28,10 @@ const AnimatedCounter = ({ target, suffix = '' }) => {
     }, [isInView, target])
 
     return <span ref={ref}>{count}{suffix}</span>
-}
+})
 
 // ── Line-by-line reveal headline ─────────────────────────────────────────────
-const AnimatedHeadline = ({ lines }) => (
+const AnimatedHeadline = React.memo(({ lines }) => (
     <h1 className="text-5xl sm:text-7xl md:text-[5.5rem] font-bold leading-[1.08] tracking-tight mb-8">
         {lines.map((line, i) => (
             <span key={i} className="block overflow-hidden pb-2">
@@ -46,20 +46,23 @@ const AnimatedHeadline = ({ lines }) => (
             </span>
         ))}
     </h1>
-)
+))
 
 // ── Auto-scrolling testimonial marquee ───────────────────────────────────────
 const CARD_W = 320
 const CARD_GAP = 24
 
-const TestimonialsMarquee = ({ items }) => {
+const TestimonialsMarquee = React.memo(({ items }) => {
+    const ref = useRef(null)
+    const isInView = useFMInView(ref, { once: false, margin: '0px' })
     const doubled = [...items, ...items]
+
     return (
-        <div className="overflow-hidden">
+        <div className="overflow-hidden" ref={ref}>
             <motion.div
                 className="flex"
-                animate={{ x: [0, -(items.length * (CARD_W + CARD_GAP))] }}
-                transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
+                animate={{ x: isInView ? [0, -(items.length * (CARD_W + CARD_GAP))] : 0 }}
+                transition={{ duration: 40, repeat: isInView ? Infinity : 0, ease: 'linear' }}
             >
                 {doubled.map((t, i) => (
                     <div
@@ -85,11 +88,18 @@ const TestimonialsMarquee = ({ items }) => {
             </motion.div>
         </div>
     )
-}
+})
 
 // ── Page ─────────────────────────────────────────────────────────────────────
 const HomePage = () => {
     const [videoError, setVideoError] = useState(false)
+    const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768)
+
+    useEffect(() => {
+        const handleResize = () => setIsDesktop(window.innerWidth >= 768)
+        window.addEventListener('resize', handleResize, { passive: true })
+        return () => window.removeEventListener('resize', handleResize)
+    }, [])
 
     const testimonials = [
         { text: "Avant SYANA, j'avais 1000 idées mais 0 structure. Aujourd'hui mon offre est claire et je vends régulièrement.", author: "Sophie M.", role: "Freelance Marketing", photo: "https://i.pravatar.cc/80?img=5", stars: 5 },
@@ -121,21 +131,25 @@ const HomePage = () => {
                             src="/hero-video.mp4"
                         />
                     )}
-                    <motion.div
-                        className="absolute top-[-25%] left-[-5%] w-[75vw] h-[75vh] rounded-full bg-cyan/[0.13] blur-[130px]"
-                        animate={{ x: [0, 40, -15, 0], y: [0, -35, 20, 0] }}
-                        transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
-                    />
-                    <motion.div
-                        className="absolute top-[0%] right-[-15%] w-[60vw] h-[60vh] rounded-full bg-violet/[0.14] blur-[130px]"
-                        animate={{ x: [0, -30, 18, 0], y: [0, 28, -22, 0] }}
-                        transition={{ duration: 28, repeat: Infinity, ease: 'easeInOut', delay: 4 }}
-                    />
-                    <motion.div
-                        className="absolute bottom-[-5%] left-[20%] w-[55vw] h-[45vh] rounded-full bg-fuchsia-600/[0.1] blur-[110px]"
-                        animate={{ x: [0, 22, -18, 0], y: [0, -18, 22, 0] }}
-                        transition={{ duration: 24, repeat: Infinity, ease: 'easeInOut', delay: 8 }}
-                    />
+                    {isDesktop && (
+                        <>
+                            <motion.div
+                                className="absolute top-[-25%] left-[-5%] w-[75vw] h-[75vh] rounded-full bg-cyan/[0.13] blur-[130px]"
+                                animate={{ x: [0, 40, -15, 0], y: [0, -35, 20, 0] }}
+                                transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
+                            />
+                            <motion.div
+                                className="absolute top-[0%] right-[-15%] w-[60vw] h-[60vh] rounded-full bg-violet/[0.14] blur-[130px]"
+                                animate={{ x: [0, -30, 18, 0], y: [0, 28, -22, 0] }}
+                                transition={{ duration: 28, repeat: Infinity, ease: 'easeInOut', delay: 4 }}
+                            />
+                            <motion.div
+                                className="absolute bottom-[-5%] left-[20%] w-[55vw] h-[45vh] rounded-full bg-fuchsia-600/[0.1] blur-[110px]"
+                                animate={{ x: [0, 22, -18, 0], y: [0, -18, 22, 0] }}
+                                transition={{ duration: 24, repeat: Infinity, ease: 'easeInOut', delay: 8 }}
+                            />
+                        </>
+                    )}
                     <div className="absolute inset-0 bg-bg-primary/30" />
                 </div>
 
@@ -394,16 +408,20 @@ const HomePage = () => {
                 >
                     <div className="absolute inset-0 bg-gradient-to-br from-cyan/80 via-violet to-fuchsia-600" />
                     <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.15),transparent_60%)]" />
-                    <motion.div
-                        className="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-white/10 blur-3xl"
-                        animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
-                        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-                    />
-                    <motion.div
-                        className="absolute -bottom-12 -left-12 w-48 h-48 rounded-full bg-white/10 blur-3xl"
-                        animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.7, 0.4] }}
-                        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-                    />
+                    {isDesktop && (
+                        <>
+                            <motion.div
+                                className="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-white/10 blur-3xl"
+                                animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
+                                transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                            />
+                            <motion.div
+                                className="absolute -bottom-12 -left-12 w-48 h-48 rounded-full bg-white/10 blur-3xl"
+                                animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.7, 0.4] }}
+                                transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+                            />
+                        </>
+                    )}
 
                     <div className="relative z-10 px-8 py-24 text-center">
                         <motion.h2
